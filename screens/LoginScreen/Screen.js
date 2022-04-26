@@ -1,36 +1,67 @@
-import { StyleSheet, TextInput, View, Button } from 'react-native';
+import { Dimensions, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
+import background from '../../assets/background.png' // relative path to image 
 
-export default function LoginScreen() {
+import { useState } from 'react';
+
+const ScreenHeight = Dimensions.get("window").height;
+
+export default function LoginScreen({navigation}) {
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   return (
-    <View style={styles.container}>
+    <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
+      <View style={styles.container}>
         <TextInput
-        // value={this.state.username}
-        // onChangeText={(username) => this.setState({ username })}
+        onChangeText={(username) => {setUserName(username);}}
         placeholder={'Username'}
-        style={styles.input}
+        style={[styles.input,{marginTop:0.07*ScreenHeight}]}
         />
         <TextInput
-        // value={this.state.password}
-        // onChangeText={(password) => this.setState({ password })}
+        onChangeText={(password) => {setPassword(password);}}
         placeholder={'Password'}
         secureTextEntry={true}
         style={styles.input}
         />
-        
-        <Button
-        title={'Login'}
-        style={styles.input}
-        // onPress={this.onLogin.bind(this)}
-        />
-  </View>
+        <TouchableOpacity
+          style={styles.btn}
+          disabled={false}
+          onPress={()=>{navigation.navigate("DashboardScreen",{username,password})}}
+          underlayColor='#fff'>
+          <Text style={styles.text}>login</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  btn:{
+    marginVertical:10,
+    paddingVertical:5,
+    paddingHorizontal:10,
+    backgroundColor:'#112031',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: 'black'
+  },
+  text:{
+    color:"white",
+    fontSize: 14,
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    width: 200,
+    height: 44,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    marginBottom: 10,
+    backgroundColor: 'white',
+    borderRadius:10,
   },
 });

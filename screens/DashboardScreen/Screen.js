@@ -1,26 +1,14 @@
-import { StyleSheet, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default function DashboardScreen() {
+export default function DashboardScreen({route}) {
+  const { uname, pwd } = route.params;
   return (
     <View style={styles.container}>
-        <TextInput
-        value={this.state.username}
-        onChangeText={(username) => this.setState({ username })}
-        placeholder={'Username'}
-        style={styles.input}
-        />
-        <TextInput
-        value={this.state.password}
-        onChangeText={(password) => this.setState({ password })}
-        placeholder={'Password'}
-        secureTextEntry={true}
-        style={styles.input}
-        />
-        
+        <Text>username: {uname} password: {pwd}</Text>
         <Button
-        title={'Login'}
+        title={'Return'}
         style={styles.input}
-        onPress={this.onLogin.bind(this)}
+        disabled
         />
   </View>
   );
@@ -29,8 +17,16 @@ export default function DashboardScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+  },
+  input: {
+    width: 200,
+    height: 44,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    marginBottom: 10,
   },
 });
