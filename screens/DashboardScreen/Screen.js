@@ -1,6 +1,12 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { useSelector } from "react-redux";
 
 export default function DashboardScreen() {
+
+  const authentication = useSelector((state) => state.authenticationReducer.accessToken);
+
+  console.log("authentication in store:\t",authentication);
+
   return (
     <View style={styles.container}>
         <Text>username: {"uname"} password: {"pwd"}</Text>
