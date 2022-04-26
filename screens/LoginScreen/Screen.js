@@ -23,8 +23,9 @@ export default function LoginScreen({navigation}) {
       "password":password
     },config)
     .then((response) => {
-      alert("Success!");
+      setLoginFailed(false);
       setloading(false);
+      navigation.navigate("DashboardScreen");
       // if (response.statusCode==200) {
       //   localStorage.setItem("user", JSON.stringify(response.data));
       // }

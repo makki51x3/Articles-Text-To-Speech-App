@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default function DashboardScreen({route}) {
-  const { uname, pwd } = route.params;
+export default function DashboardScreen() {
   return (
     <View style={styles.container}>
-        <Text>username: {uname} password: {pwd}</Text>
+        <Text>username: {"uname"} password: {"pwd"}</Text>
         <Button
-        title={'Return'}
+        title={'Back'}
         style={styles.input}
         disabled
         />
