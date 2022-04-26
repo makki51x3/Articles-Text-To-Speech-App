@@ -1,52 +1,70 @@
-import { Dimensions, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
+import { Dimensions, ActivityIndicator, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
 import background from '../../assets/background.png' // relative path to image 
 import { configStore } from 'redux'
 import { useState } from 'react';
 import axios from "axios";
+import { setWarningHandler } from 'react-native/Libraries/Utilities/RCTLog';
 
 const ScreenHeight = Dimensions.get("window").height;
 
-const login = (username, password) => {
-  const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
-  axios.post("http://34.245.213.76:3000" + "/auth/signin", {
-    "username":username,
-    "password":password
-  },config)
-  .then((response) => {
-    alert("Success!");
-    if (response.statusCode==200) {
-      localStorage.setItem("user", JSON.stringify(response.data));
-    }
-  },
-  (error) => {
-    alert("Invalid username or password!");
-  });
-};
-
 export default function LoginScreen({navigation}) {
+
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setloading] = useState(false);
+  const [userplaceholder, setUserPlaceholder] = useState("User Name");
+  const [passplaceholder, setPassPlaceholder] = useState("Password");
+  const [loginFailed, setLoginFailed] = useState(false);
+  const login = (username, password) => {
+    setloading(true);
+    const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
+    axios.post("http://34.245.213.76:3000" + "/auth/signin", {
+      "username":username,
+      "password":password
+    },config)
+    .then((response) => {
+      alert("Success!");
+      setloading(false);
+      // if (response.statusCode==200) {
+      //   localStorage.setItem("user", JSON.stringify(response.data));
+      // }
+    },
+    (error) => {
+      setloading(false);
+      setUserPlaceholder("User");
+      setPassPlaceholder("Password");
+      setLoginFailed(true);
+    });
+  };
+
   return (
     <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
       <View style={styles.container}>
         <TextInput
         onChangeText={(username) => {setUserName(username);}}
-        placeholder={"User Name"}
+        placeholder={userplaceholder}
         style={[styles.input,{marginTop:0.07*ScreenHeight}]}
         />
         <TextInput
         onChangeText={(password) => {setPassword(password);}}
-        placeholder={"Password"}
+        placeholder={passplaceholder}
         secureTextEntry={true}
         style={styles.input}
         />
-        <TouchableOpacity
-          style={styles.btn}
-          disabled={username=="" || password==""?true:false}
-          onPress={()=>{login(username,password)}}
-          underlayColor='#fff'>
-          <Text style={styles.text}>Login</Text>
-        </TouchableOpacity>
+        {loginFailed?<Text style={{color:"red", fontWeight:"700"}}> Invalid username or password!</Text>:<></>}
+        <View style={{flexDirection:"row"}}>
+          <TouchableOpacity
+            style={styles.btn}
+            disabled={username=="" || password=="" || loading==true?true:false}
+            onPress={()=>{
+              login(username,password);
+            }}
+            underlayColor='#fff'>
+            <Text style={styles.text}>Login</Text>
+          </TouchableOpacity>
+          {loading?<ActivityIndicator size="small" color="white" style={{marginLeft:15}} />:<></>}
+        </View>
+
       </View>
     </ImageBackground>
   );
