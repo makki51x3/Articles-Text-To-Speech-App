@@ -1,17 +1,17 @@
 import { StyleSheet, TextInput, View, Button } from 'react-native';
 
-export default function App() {
+export default function LoginScreen() {
   return (
     <View style={styles.container}>
         <TextInput
-        value={this.state.username}
-        onChangeText={(username) => this.setState({ username })}
+        // value={this.state.username}
+        // onChangeText={(username) => this.setState({ username })}
         placeholder={'Username'}
         style={styles.input}
         />
         <TextInput
-        value={this.state.password}
-        onChangeText={(password) => this.setState({ password })}
+        // value={this.state.password}
+        // onChangeText={(password) => this.setState({ password })}
         placeholder={'Password'}
         secureTextEntry={true}
         style={styles.input}
@@ -20,7 +20,7 @@ export default function App() {
         <Button
         title={'Login'}
         style={styles.input}
-        onPress={this.onLogin.bind(this)}
+        // onPress={this.onLogin.bind(this)}
         />
   </View>
   );

@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput, View, Button } from 'react-native';
 
-export default function App() {
+export default function DashboardScreen() {
   return (
     <View style={styles.container}>
         <TextInput
