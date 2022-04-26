@@ -1,9 +1,32 @@
 import { Dimensions, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
 import background from '../../assets/background.png' // relative path to image 
-
+import { configStore } from 'redux'
 import { useState } from 'react';
+import axios from "axios";
 
 const ScreenHeight = Dimensions.get("window").height;
+
+const login = (username, password) => {
+  if (username=="" || password==""){
+    alert("Missing username or password!");
+  }
+  else{
+    const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
+    axios.post("http://34.245.213.76:3000" + "/auth/signin", {
+      "username":username,
+      "password":password
+    },config)
+    .then((response) => {
+      alert("Success!");
+      if (response.statusCode==200) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+    },
+    (error) => {
+      alert("Invalid username or password!");
+    });
+  }
+};
 
 export default function LoginScreen({navigation}) {
   const [username, setUserName] = useState("");
@@ -25,9 +48,9 @@ export default function LoginScreen({navigation}) {
         <TouchableOpacity
           style={styles.btn}
           disabled={false}
-          onPress={()=>{navigation.navigate("DashboardScreen",{username,password})}}
+          onPress={()=>{login(username,password)}}
           underlayColor='#fff'>
-          <Text style={styles.text}>login</Text>
+          <Text style={styles.text}>Login</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
