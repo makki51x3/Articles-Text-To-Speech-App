@@ -1,9 +1,9 @@
 import { Dimensions, ActivityIndicator, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
 import background from '../../assets/background.png' // relative path to image 
-import { configStore } from 'redux'
 import { useState } from 'react';
 import axios from "axios";
-import { setWarningHandler } from 'react-native/Libraries/Utilities/RCTLog';
+import { useDispatch } from "react-redux";
+import {updateAccessToken} from '../../redux/feature/authenticationSlice'
 
 const ScreenHeight = Dimensions.get("window").height;
 
@@ -15,8 +15,16 @@ export default function LoginScreen({navigation}) {
   const [userplaceholder, setUserPlaceholder] = useState("User Name");
   const [passplaceholder, setPassPlaceholder] = useState("Password");
   const [loginFailed, setLoginFailed] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleUpdateAccessToken = (tkn) => {
+    if (!tkn) return;
+    dispatch(updateAccessToken(tkn));
+  };  
+
   const login = (username, password) => {
     setloading(true);
+
     const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
     axios.post("http://34.245.213.76:3000" + "/auth/signin", {
       "username":username,
@@ -26,9 +34,9 @@ export default function LoginScreen({navigation}) {
       setLoginFailed(false);
       setloading(false);
       navigation.navigate("DashboardScreen");
-      // if (response.statusCode==200) {
-      //   localStorage.setItem("user", JSON.stringify(response.data));
-      // }
+      // save login response in store
+      handleUpdateAccessToken(response.data.accessToken);
+
     },
     (error) => {
       setloading(false);
@@ -36,6 +44,7 @@ export default function LoginScreen({navigation}) {
       setPassPlaceholder("Password");
       setLoginFailed(true);
     });
+
   };
 
   return (
@@ -65,7 +74,6 @@ export default function LoginScreen({navigation}) {
           </TouchableOpacity>
           {loading?<ActivityIndicator size="small" color="white" style={{marginLeft:15}} />:<></>}
         </View>
-
       </View>
     </ImageBackground>
   );
