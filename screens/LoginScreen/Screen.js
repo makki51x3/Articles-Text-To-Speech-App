@@ -7,25 +7,20 @@ import axios from "axios";
 const ScreenHeight = Dimensions.get("window").height;
 
 const login = (username, password) => {
-  if (username=="" || password==""){
-    alert("Missing username or password!");
-  }
-  else{
-    const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
-    axios.post("http://34.245.213.76:3000" + "/auth/signin", {
-      "username":username,
-      "password":password
-    },config)
-    .then((response) => {
-      alert("Success!");
-      if (response.statusCode==200) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-    },
-    (error) => {
-      alert("Invalid username or password!");
-    });
-  }
+  const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
+  axios.post("http://34.245.213.76:3000" + "/auth/signin", {
+    "username":username,
+    "password":password
+  },config)
+  .then((response) => {
+    alert("Success!");
+    if (response.statusCode==200) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+  },
+  (error) => {
+    alert("Invalid username or password!");
+  });
 };
 
 export default function LoginScreen({navigation}) {
@@ -36,18 +31,18 @@ export default function LoginScreen({navigation}) {
       <View style={styles.container}>
         <TextInput
         onChangeText={(username) => {setUserName(username);}}
-        placeholder={'Username'}
+        placeholder={"User Name"}
         style={[styles.input,{marginTop:0.07*ScreenHeight}]}
         />
         <TextInput
         onChangeText={(password) => {setPassword(password);}}
-        placeholder={'Password'}
+        placeholder={"Password"}
         secureTextEntry={true}
         style={styles.input}
         />
         <TouchableOpacity
           style={styles.btn}
-          disabled={false}
+          disabled={username=="" || password==""?true:false}
           onPress={()=>{login(username,password)}}
           underlayColor='#fff'>
           <Text style={styles.text}>Login</Text>
