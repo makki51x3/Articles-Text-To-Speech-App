@@ -25,20 +25,25 @@ export default function LoginScreen({navigation}) {
   const login = (username, password) => {
     setloading(true);
 
+    // Setup required http headers
     const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
+    
+    // Initiate a post request with username and password to Login API
     axios.post("http://34.245.213.76:3000" + "/auth/signin", {
       "username":username,
       "password":password
     },config)
-    .then((response) => {
+    .then((response) => { 
+      // reset LoginFailed and Loading flags
       setLoginFailed(false);
       setloading(false);
-      navigation.navigate("DashboardScreen");
-      // save login response in store
-      handleUpdateAccessToken(response.data.accessToken);
-
+      console.log(response);
+      if (response.status >= 200 && response.status <= 299){ //check for successful status code
+        handleUpdateAccessToken(response.data.accessToken); // save login response in redux store
+        navigation.navigate("DashboardScreen"); // navigate to dashboard
+      }
     },
-    (error) => {
+    (error) => { // display login failed and reset placeholders
       setloading(false);
       setUserPlaceholder("User");
       setPassPlaceholder("Password");
@@ -65,7 +70,7 @@ export default function LoginScreen({navigation}) {
         <View style={{flexDirection:"row"}}>
           <TouchableOpacity
             style={styles.btn}
-            disabled={username=="" || password=="" || loading==true?true:false}
+            disabled={username=="" || password=="" || loading==true}
             onPress={()=>{
               login(username,password);
             }}
