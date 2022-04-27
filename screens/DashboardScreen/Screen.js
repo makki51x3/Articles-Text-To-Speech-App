@@ -1,4 +1,4 @@
-import { Dimensions, ActivityIndicator, StyleSheet,ImageBackground, Text, View, TouchableOpacity } from 'react-native';
+import { Dimensions, ActivityIndicator, StyleSheet,ImageBackground, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
@@ -7,11 +7,13 @@ import { Appbar } from 'react-native-paper';
 import {handleUpdateArticles,handleUpdateAccessToken} from "../DashboardScreen/handlers/accessToken" 
 
 const ScreenWidth = Dimensions.get("window").width;
+const ScreenHeight = Dimensions.get("window").height;
 
 export default function DashboardScreen({navigation}) {
   const [loading, setloading] = useState(false);
+  const [filter, setFilter] = useState("this is the filter");
   const [pageNumber, setPageNumber] = useState(0);
-  const [searchInput, setSearchInput] = useState(false);
+  const [searchBarVisible, setSearchBarVisible] = useState(false);
   const authentication = useSelector((state) => state.authenticationReducer.accessToken);
   const articles = useSelector((state) => state.articlesReducer);
   const dispatch = useDispatch();
@@ -46,18 +48,24 @@ export default function DashboardScreen({navigation}) {
     }
 
     const _handleSearch = () => {
-      setSearchInput(!searchInput);
+      if (searchBarVisible==true){console.log("Filter:\t"+filter);}
+      setSearchBarVisible(!searchBarVisible);
     }
   
     const _handleMore = () => console.log('Shown more');
 
   return (
-    <ImageBackground source= {background}  resizeMode="cover" style={{flex:1}}>
+    <ImageBackground source= {background}  resizeMode="cover" style={{flex:1,flexDirection:'row'}}>
       <View style={{width:ScreenWidth/2,  flex:1}}> 
-        <Appbar.Header style={{backgroundColor:"rgb(31, 20, 99)"}}>
+        <Appbar.Header style={{backgroundColor:"rgb(31, 20, 99)",justifyContent:"space-between"}}>
           <Appbar.BackAction onPress={_goBack} />
-          <Appbar.Content /> {/* title="Title" subtitle="Subtitle" /> */}
-          <Appbar.Action icon="magnify" onPress={_handleSearch} />
+          {/* <Appbar.Content title="Title" subtitle="Subtitle" /> */}
+          {searchBarVisible?<TextInput 
+          onChangeText={(filter) => {setFilter(filter);}} 
+          placeholder="Search Articles"
+          style={styles.searchInput}
+          />:<></>}
+          <Appbar.Action icon="magnify" onPress={()=>{_handleSearch();}} />
           {/* <Appbar.Action icon="dots-vertical" onPress={_handleMore} /> */}
         </Appbar.Header>
         <View style={[styles.container,{backgroundColor:"black", opacity:0.77}]}>
@@ -83,6 +91,7 @@ export default function DashboardScreen({navigation}) {
           </View>
         </View>
       </View>
+      <View style={[styles.container,{width:ScreenWidth/2,  flex:1}]}></View>
     </ImageBackground>      
   );
 }
@@ -108,14 +117,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  input: {
-    width: 200,
-    height: 44,
-    padding: 10,
+  searchInput: {
+    flex:1,
+    textAlign: 'center',
+    padding:5,
     borderWidth: 1,
     borderColor: 'black',
-    marginBottom: 10,
+    fontSize: 14,
     backgroundColor: 'white',
-    borderRadius:10,
+    borderRadius:5,
   },
 });

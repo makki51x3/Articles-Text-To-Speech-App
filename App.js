@@ -13,9 +13,9 @@ function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LoginScreen">
+        <Stack.Navigator initialRouteName="DashboardScreen">
           <Stack.Screen name="LoginScreen" component={LoginScreen}  options={{headerShown: false}}/>
-          <Stack.Screen name="DashboardScreen" component={DashboardScreen}   options={{headerShown: true}}/>
+          <Stack.Screen name="DashboardScreen" component={DashboardScreen}   options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
