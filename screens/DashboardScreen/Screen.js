@@ -1,6 +1,6 @@
-import { Dimensions, ActivityIndicator, SafeAreaView, StyleSheet,ImageBackground, Platform, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {  StatusBar, ActivityIndicator, StyleSheet,ImageBackground, Platform, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
 import axios from "axios";
 import { Appbar } from 'react-native-paper';
@@ -8,18 +8,12 @@ import handleUpdateAccessToken from "../DashboardScreen/handlers/accessToken"
 import handleUpdateArticles from "../DashboardScreen/handlers/articles"
 import {Cards} from './Components/ArticleCard';
 
-// const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
-
-const ScreenWidth = Dimensions.get("window").width;
-const ScreenHeight = Dimensions.get("window").height;
-
 export default function DashboardScreen({navigation}) {
   const [loading, setloading] = useState(false);
   const [filter, setFilter] = useState("this is the filter");
   const [pageNumber, setPageNumber] = useState(0);
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const authentication = useSelector((state) => state.authenticationReducer.accessToken);
-  const articles = useSelector((state) => state.articlesReducer.articles);
   const dispatch = useDispatch();
 
   const fetchNextPage = () => {
@@ -53,40 +47,35 @@ export default function DashboardScreen({navigation}) {
     }
   
   return (
-    <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
-      <SafeAreaView style={{width:(Platform.OS == "ios"||Platform.OS =="android")?"100%":"70%",  flex:1}}> 
-        <Appbar.Header style={{backgroundColor:"rgb(31, 20, 99)",justifyContent:"space-between"}}>
-          <Appbar.BackAction onPress={()=>{logOut()}} />
-          {searchBarVisible?
-          <View style={{width:"50%"}}>
-            <TextInput 
-            onChangeText={(filter) => {setFilter(filter);}} 
-            placeholder="Search Articles"
-            style={styles.searchInput} 
-            />
-          </View>:<></>}
-          <Appbar.Action icon="magnify" onPress={()=>{handleSearch()}} />
-        </Appbar.Header>
-        <View style={[styles.container,{backgroundColor:"rgba(0, 0, 0,0.77)", }]}>
-          <Cards fetchNextPage={()=>{fetchNextPage()}}></Cards>
-          {loading?<View style={{height:44}}><ActivityIndicator size="large" color="white" /></View>:<></>}
+      <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
+        <View style={{width:(Platform.OS == "ios"||Platform.OS =="android")?"100%":"70%", flex:1}}> 
+          <StatusBar hidden={true} />
+          <Appbar style={{backgroundColor:"rgb(31, 20, 99)",justifyContent:"space-between",marginTop:Platform.OS == "ios"?30:StatusBar.currentHeight}}>
+            <Appbar.BackAction onPress={()=>{logOut()}} />
+            {searchBarVisible?
+            <View style={{width:"50%"}}>
+              <TextInput 
+              onChangeText={(filter) => {setFilter(filter);}} 
+              placeholder="Search articles"
+              style={styles.searchInput} 
+              />
+            </View>:<></>}
+            <Appbar.Action icon="magnify" onPress={()=>{handleSearch()}} />
+          </Appbar>
+          <View style={[styles.container,{backgroundColor:"rgba(0, 0, 0,0.77)"}]}>
+            <Cards fetchNextPage={()=>{fetchNextPage()}}></Cards>
+            {loading?<View style={{height:50}}><ActivityIndicator size="large" color="white" /></View>:<></>}
+          </View>
         </View>
-      </SafeAreaView>
-    </ImageBackground>      
+      </ImageBackground>    
+    
+  
   );
 }
           
 
 
 const styles = StyleSheet.create({
-  temp:{
-    marginHorizontal:"3%",
-    padding:"1%",
-    backgroundColor:'#112031',
-    borderRadius:10,
-    borderWidth: 1,
-    borderColor: 'black'
-  },
   btn:{
     marginVertical:10,
     paddingVertical:5,
@@ -110,6 +99,7 @@ const styles = StyleSheet.create({
     flex:1,
     textAlign: 'center',
     padding:5,
+    margin:10,
     borderWidth: 1,
     borderColor: 'black',
     fontSize: 14,

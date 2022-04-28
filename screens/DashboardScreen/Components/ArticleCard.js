@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, RefreshControl, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+import { SafeAreaView, View, RefreshControl, Image, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Subheading, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
@@ -15,17 +15,19 @@ export const  Cards = ({fetchNextPage}) => {
     const [refresh, setRefresh] = useState(false);
     const [viewContent, setViewContent] = useState("");
     const callRefreshControl = () => {
+        console.log(articlesList);
         setRefresh(true);
         handleUpdateArticles("",dispatch); // reset list of articles in redux store
         fetchNextPage();
         setRefresh(false);
         }
     
-    const Item = ({ title, subtitle, abstract, id, content }) => (
+    const Item = ({ title, subtitle, abstract, id, content, media }) => (
             <Card onPress={()=>{viewContent==id?setViewContent(""):setViewContent(id)}} style={styles.card}>
                 <Card.Title title={title} subtitle={subtitle} ></Card.Title>
                 <Card.Content>
-                    <Paragraph >{abstract}</Paragraph>   
+                    <Paragraph >{abstract}</Paragraph> 
+                    {media==""?<></>:<Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
                     {viewContent==id?
                     <View style={styles.subheading}>
                         <Subheading>{content}</Subheading>
@@ -50,7 +52,8 @@ export const  Cards = ({fetchNextPage}) => {
             (articlesList[index]["byline"]["original"]==null?"":articlesList[index]["byline"]["original"])
         } 
         abstract={articlesList[index]["abstract"]} 
-        content={articlesList[index]["lead_paragraph"]} 
+        content={articlesList[index]["lead_paragraph"]}
+        media={(articlesList[index]["multimedia"]).length!=0?articlesList[index]["multimedia"][0]["url"]:""}
         />
     );    
     if (articlesList.length==0){
@@ -80,6 +83,13 @@ export const  Cards = ({fetchNextPage}) => {
 }
 
 const styles = StyleSheet.create({
+    image: {
+        maxHeight: "300px", 
+        maxWidth: "300px",
+        margin: 5, 
+        resizeMode:"cover",
+        borderRadius:5 
+      },
     subheading:{
         backgroundColor:"rgb(240,240,240)",
         borderRadius:10, 
