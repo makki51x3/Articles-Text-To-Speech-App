@@ -1,4 +1,4 @@
-import { Dimensions, ActivityIndicator, StyleSheet,ImageBackground, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { Dimensions, ActivityIndicator, SafeAreaView, StyleSheet,ImageBackground, Platform, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
@@ -6,8 +6,6 @@ import axios from "axios";
 import { Appbar } from 'react-native-paper';
 import handleUpdateAccessToken from "../DashboardScreen/handlers/accessToken" 
 import handleUpdateArticles from "../DashboardScreen/handlers/articles"
-
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import {Cards} from './Components/ArticleCard';
 
 // const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
@@ -56,7 +54,7 @@ export default function DashboardScreen({navigation}) {
   
   return (
     <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
-      <View style={{width:"70%",  flex:1}}> 
+      <SafeAreaView style={{width:(Platform.OS == "ios"||Platform.OS =="android")?"100%":"70%",  flex:1}}> 
         <Appbar.Header style={{backgroundColor:"rgb(31, 20, 99)",justifyContent:"space-between"}}>
           <Appbar.BackAction onPress={()=>{logOut()}} />
           {searchBarVisible?
@@ -71,9 +69,9 @@ export default function DashboardScreen({navigation}) {
         </Appbar.Header>
         <View style={[styles.container,{backgroundColor:"rgba(0, 0, 0,0.77)", }]}>
           <Cards fetchNextPage={()=>{fetchNextPage()}}></Cards>
-          {loading?<View style={{height:50}}><ActivityIndicator size="large" color="white" /></View>:<></>}
+          {loading?<View style={{height:44}}><ActivityIndicator size="large" color="white" /></View>:<></>}
         </View>
-      </View>
+      </SafeAreaView>
     </ImageBackground>      
   );
 }

@@ -1,21 +1,11 @@
 import React from 'react';
 import { SafeAreaView, View, RefreshControl, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar, Subheading, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import handleUpdateArticles from "../../DashboardScreen/handlers/articles"
 
-
-const Item = ({ title, subtitle, content, id, }) => (
-<Card onPress={()=>{alert(id)}} style={{marginVertical:10,marginHorizontal:15,borderRadius:15}}>
-    <Card.Title title={title} subtitle={subtitle} ></Card.Title>
-    <Card.Content><Paragraph>{content}</Paragraph></Card.Content>
-</Card>
-);
-
-const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()}; // every 130 words takes about 1 minute of speech depending on what I googled
-
-const Cards = ({fetchNextPage}) => {
+export const  Cards = ({fetchNextPage}) => {
     
     useEffect(() => { // load data only once on mount
         fetchNextPage(); 
@@ -23,14 +13,29 @@ const Cards = ({fetchNextPage}) => {
 
     const dispatch = useDispatch();
     const [refresh, setRefresh] = useState(false);
-
+    const [viewContent, setViewContent] = useState("");
     const callRefreshControl = () => {
         setRefresh(true);
         handleUpdateArticles("",dispatch); // reset list of articles in redux store
         fetchNextPage();
         setRefresh(false);
         }
+    
+    const Item = ({ title, subtitle, abstract, id, content }) => (
+            <Card onPress={()=>{viewContent==id?setViewContent(""):setViewContent(id)}} style={styles.card}>
+                <Card.Title title={title} subtitle={subtitle} ></Card.Title>
+                <Card.Content>
+                    <Paragraph >{abstract}</Paragraph>   
+                    {viewContent==id?
+                    <View style={styles.subheading}>
+                        <Subheading>{content}</Subheading>
+                    </View>:<></>}
+                </Card.Content>
+            </Card>
+        );
 
+    // every 130 words is about 1 minute of speech depending on what I googled. ..
+    const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()}; 
     const articlesList = useSelector((state) => state.articlesReducer.articles);
     
     const renderItem = ({ item,index }) => (
@@ -40,11 +45,12 @@ const Cards = ({fetchNextPage}) => {
         subtitle={
             (timeToRead(articlesList[index]["word_count"])==0?"1":timeToRead(articlesList[index]["word_count"]))
             + 
-            " minute read\t"
+            " minute read\t\t"
             +
             (articlesList[index]["byline"]["original"]==null?"":articlesList[index]["byline"]["original"])
         } 
-        content={articlesList[index]["abstract"]} 
+        abstract={articlesList[index]["abstract"]} 
+        content={articlesList[index]["lead_paragraph"]} 
         />
     );    
     if (articlesList.length==0){
@@ -74,6 +80,17 @@ const Cards = ({fetchNextPage}) => {
 }
 
 const styles = StyleSheet.create({
+    subheading:{
+        backgroundColor:"rgb(240,240,240)",
+        borderRadius:10, 
+        padding:10
+    },
+    card:{
+        marginVertical:10,
+        marginHorizontal:15,
+        borderRadius:15,
+        backgroundColor:"rgb(200,200,200)"
+    },
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
