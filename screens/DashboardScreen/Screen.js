@@ -45,7 +45,7 @@ export default function DashboardScreen({navigation}) {
   };
 
     const logOut = () => {        
-      handleUpdateAccessToken("",dispatch); // save login response in redux store
+      handleUpdateAccessToken("",dispatch); // reset access token in redux store
       navigation.navigate("LoginScreen"); // navigate to Login Screen
     }
 
@@ -55,31 +55,25 @@ export default function DashboardScreen({navigation}) {
     }
   
   return (
-    <ImageBackground source= {background}  resizeMode="cover" style={{flex:1,flexDirection:'row'}}>
-      <View style={{width:"50%",  flex:1}}> 
+    <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
+      <View style={{width:"70%",  flex:1}}> 
         <Appbar.Header style={{backgroundColor:"rgb(31, 20, 99)",justifyContent:"space-between"}}>
           <Appbar.BackAction onPress={()=>{logOut()}} />
-          {searchBarVisible?<TextInput 
-          onChangeText={(filter) => {setFilter(filter);}} 
-          placeholder="Search Articles"
-          style={styles.searchInput}
-          />:<></>}
+          {searchBarVisible?
+          <View style={{width:"50%"}}>
+            <TextInput 
+            onChangeText={(filter) => {setFilter(filter);}} 
+            placeholder="Search Articles"
+            style={styles.searchInput} 
+            />
+          </View>:<></>}
           <Appbar.Action icon="magnify" onPress={()=>{handleSearch()}} />
         </Appbar.Header>
         <View style={[styles.container,{backgroundColor:"rgba(0, 0, 0,0.77)", }]}>
           <Cards fetchNextPage={()=>{fetchNextPage()}}></Cards>
-          {loading?<View style={{backgroundColor:"rgba(0, 0, 0,0.9)",height:25}}><ActivityIndicator size="small" color="white" style={{marginLeft:15}} /></View>:<></>}
-          {/* <TouchableOpacity
-            style={[styles.btn,{width:"50%"}]}
-            onPress={()=>{
-              fetchNextPage();
-            }}
-            underlayColor='#fff'>
-            <Text style={styles.text}>print articles in console</Text>
-          </TouchableOpacity> */}
+          {loading?<View style={{height:50}}><ActivityIndicator size="large" color="white" /></View>:<></>}
         </View>
       </View>
-      {/* <View style={[styles.container,{width:ScreenWidth/2,  flex:1}]}></View> */}
     </ImageBackground>      
   );
 }

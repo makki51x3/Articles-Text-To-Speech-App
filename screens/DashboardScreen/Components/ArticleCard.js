@@ -1,10 +1,12 @@
 import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
-import { useSelector } from "react-redux";
+import { SafeAreaView, View, RefreshControl, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
+import handleUpdateArticles from "../../DashboardScreen/handlers/articles"
 
-const Item = ({ title, subtitle, content, id }) => (
+
+const Item = ({ title, subtitle, content, id, }) => (
 <Card onPress={()=>{alert(id)}} style={{marginVertical:10,marginHorizontal:15,borderRadius:15}}>
     <Card.Title title={title} subtitle={subtitle} ></Card.Title>
     <Card.Content><Paragraph>{content}</Paragraph></Card.Content>
@@ -12,11 +14,22 @@ const Item = ({ title, subtitle, content, id }) => (
 );
 
 const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()}; // every 130 words takes about 1 minute of speech depending on what I googled
+
 const Cards = ({fetchNextPage}) => {
-    // load data only once on mount
-    useEffect(() => {
+    
+    useEffect(() => { // load data only once on mount
         fetchNextPage(); 
     }, []);
+
+    const dispatch = useDispatch();
+    const [refresh, setRefresh] = useState(false);
+
+    const callRefreshControl = () => {
+        setRefresh(true);
+        handleUpdateArticles("",dispatch); // reset list of articles in redux store
+        fetchNextPage();
+        setRefresh(false);
+        }
 
     const articlesList = useSelector((state) => state.articlesReducer.articles);
     
@@ -41,6 +54,12 @@ const Cards = ({fetchNextPage}) => {
         return (
             <SafeAreaView style={styles.container}>
             <FlatList
+                refreshControl={
+                    <RefreshControl
+                    refreshing={refresh}
+                    onRefresh={()=>{callRefreshControl()}}
+                    />
+                }
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 data={articlesList}
