@@ -13,7 +13,7 @@ function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="DashboardScreen">
+        <Stack.Navigator initialRouteName="LoginScreen">
           <Stack.Screen name="LoginScreen" component={LoginScreen}  options={{headerShown: false}}/>
           <Stack.Screen name="DashboardScreen" component={DashboardScreen}   options={{headerShown: false}}/>
         </Stack.Navigator>
