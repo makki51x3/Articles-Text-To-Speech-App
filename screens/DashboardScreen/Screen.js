@@ -8,7 +8,7 @@ import handleUpdateAccessToken from "../DashboardScreen/handlers/accessToken"
 import handleUpdateArticles from "../DashboardScreen/handlers/articles"
 
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import Cards from './Components/articleCard';
+import {Cards} from './Components/ArticleCard';
 
 // const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
