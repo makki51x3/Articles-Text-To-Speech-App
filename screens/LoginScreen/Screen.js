@@ -1,28 +1,23 @@
 import { Dimensions, SafeAreaView, ActivityIndicator, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
 import background from '../../assets/background.png' // relative path to image 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import {updateAccessToken} from '../../redux/feature/authenticationSlice'
+import { useSelector, useDispatch } from "react-redux";
+import { handleUpdateUserName, handleUpdatePassword, handleUpdateAccessToken } from '../DashboardScreen/handlers/authentication';
 
 const ScreenHeight = Dimensions.get("window").height;
 
 export default function LoginScreen({navigation}) {
 
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setloading] = useState(false);
   const [userplaceholder, setUserPlaceholder] = useState("User Name");
   const [passplaceholder, setPassPlaceholder] = useState("Password");
   const [loginFailed, setLoginFailed] = useState(false);
+
+  const {userName, password} = useSelector((state) => state.authenticationReducer);
   const dispatch = useDispatch();
 
-  const handleUpdateAccessToken = (tkn) => {
-    if (!tkn) return;
-    dispatch(updateAccessToken(tkn));
-  };  
-
-  const login = (username, password) => {
+  const login = () => {
     setloading(true);
 
     // Setup required http headers
@@ -30,16 +25,16 @@ export default function LoginScreen({navigation}) {
     
     // Initiate a post request with username and password to Login API
     axios.post("http://34.245.213.76:3000" + "/auth/signin", {
-      "username":username,
+      "username":userName,
       "password":password
     },config)
     .then((response) => { 
       // reset LoginFailed and Loading flags
       setLoginFailed(false);
       setloading(false);
-      console.log(response);
+
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
-        handleUpdateAccessToken(response.data.accessToken); // save login response in redux store
+        handleUpdateAccessToken(response.data.accessToken,dispatch); // save login response in redux store
         navigation.navigate("DashboardScreen"); // navigate to dashboard
       }
     },
@@ -57,28 +52,28 @@ export default function LoginScreen({navigation}) {
       <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
         <View style={styles.container}>
           <TextInput
-          onChangeText={(username) => {setUserName(username);}}
+          onChangeText={(username) => {handleUpdateUserName(username,dispatch);}}
           placeholder={userplaceholder}
           style={[styles.input,{marginTop:0.07*ScreenHeight}]}
           />
           <TextInput
-          onChangeText={(password) => {setPassword(password);}}
+          onChangeText={(password) => {handleUpdatePassword(password,dispatch);}}
           placeholder={passplaceholder}
           secureTextEntry={true}
           style={styles.input}
           />
-          {loginFailed?<Text style={{color:"red", fontWeight:"700"}}> Invalid username or password!</Text>:<></>}
+          {loginFailed?<Text style={styles.warning}> Invalid username or password!</Text>:<></>}
           <View style={{flexDirection:"row"}}>
             <TouchableOpacity
+              disabled={userName=="" || password=="" || loading}
               style={styles.btn}
-              disabled={username=="" || password=="" || loading==true}
               onPress={()=>{
-                login(username,password);
+                login(userName,password);
               }}
               underlayColor='#fff'>
               <Text style={styles.text}>Login</Text>
             </TouchableOpacity>
-            {loading?<ActivityIndicator size="small" color="white" style={{marginLeft:15}} />:<></>}
+            {loading?<ActivityIndicator size="small" color="white" style={styles.spinner} />:<></>}
           </View>
         </View>
       </ImageBackground>
@@ -87,11 +82,19 @@ export default function LoginScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  warning:{
+    color:"red", 
+    fontWeight:"700"
+  },
+  spinner:{
+    marginLeft:15,
+  },
   btn:{
+    opacity:1,
     marginVertical:10,
-    paddingVertical:5,
+    paddingVertical:7,
     paddingHorizontal:10,
-    backgroundColor:'#112031',
+    backgroundColor:"rgb(31, 20, 99)",
     borderRadius:10,
     borderWidth: 1,
     borderColor: 'black'

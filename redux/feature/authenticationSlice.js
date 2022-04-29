@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
   
   const initialState = {
+    userName:"",
+    password:"",
     accessToken: ""
   };
   
@@ -10,10 +12,16 @@ import { createSlice } from "@reduxjs/toolkit";
     reducers: {
       updateAccessToken: (state, action) => {
         state.accessToken=action.payload;
-      }
+      },
+      updateUserName: (state, action) => {
+        state.userName=action.payload;
+      },
+      updatePassword: (state, action) => {
+        state.password=action.payload;
+      },
     },
   });
   
-  export const { updateAccessToken } = authenticationSlice.actions;
+  export const { updateAccessToken, updatePassword, updateUserName  } = authenticationSlice.actions;
   
   export default authenticationSlice.reducer;

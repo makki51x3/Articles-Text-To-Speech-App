@@ -119,18 +119,17 @@ const styles = StyleSheet.create({
         borderRadius:15,
         backgroundColor:"rgb(200,200,200)"
     },
-  container: {
-    flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    margin: 15,
-  },
-  title: {
-    fontSize: 32,
-  },
+    container: {
+        flex: 1,
+    },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        margin: 15,
+    },
+    title: {
+        fontSize: 32,
+    },
 });
 
 export default Cards;
