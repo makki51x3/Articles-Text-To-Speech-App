@@ -28,7 +28,7 @@ export default function DashboardScreen({navigation}) {
       console.log(response);
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
         handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
-        handleUpdatePageNumber(pageNumber+1); // increment page number
+        handleUpdatePageNumber(pageNumber+1, dispatch); // increment page number
       }
     },
     (error) => { // display login failed and reset placeholders

@@ -13,7 +13,7 @@ import { createSlice } from "@reduxjs/toolkit";
         state.articles.push(action.payload);
       },
       updatePageNumber: (state,action)=>{
-        state.currentPageNumber=state.currentPageNumber+1;
+        state.currentPageNumber=action.payload;
       }
     },
   });

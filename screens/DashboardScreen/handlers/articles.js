@@ -7,11 +7,8 @@ export const handleUpdateArticles = (batch,dispatch) => {
     });
   }; 
 
-export const handleUpdatePageNumber = (batch,dispatch) => {
-    if (!batch) return;
-    batch.forEach(element => {
-        dispatch(updatePageNumber(element));
-    });
+export const handleUpdatePageNumber = (num,dispatch) => {
+    dispatch(updatePageNumber(num));
 }; 
 
 export default {handleUpdateArticles,handleUpdatePageNumber};

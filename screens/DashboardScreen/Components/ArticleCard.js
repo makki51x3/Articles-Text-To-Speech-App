@@ -3,7 +3,7 @@ import { Dimensions, SafeAreaView, View, RefreshControl, Image, Platform, FlatLi
 import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Subheading, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
-import handleUpdateArticles from "../../DashboardScreen/handlers/articles"
+import {handleUpdateArticles, handleUpdatePageNumber} from "../../DashboardScreen/handlers/articles"
 
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
@@ -17,10 +17,14 @@ export const  Cards = ({fetchNextPage}) => {
     const dispatch = useDispatch();
     const [refresh, setRefresh] = useState(false);
     const [viewContent, setViewContent] = useState("");
+    const [ref, setRef] = useState(null);
+    const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
+    
     const callRefreshControl = () => {
         console.log(articlesList);
         setRefresh(true);
         handleUpdateArticles("",dispatch); // reset list of articles in redux store
+        handleUpdatePageNumber(0,dispatch); // reset page number
         fetchNextPage();
         setRefresh(false);
         }
@@ -77,8 +81,18 @@ export const  Cards = ({fetchNextPage}) => {
                 data={articlesList}
                 renderItem={renderItem}
                 keyExtractor={(article,index) => index}
+                ref={(ref) => {
+                    setRef(ref);
+                  }}
                 onEndReachedThreshold={0}
-                onEndReached={()=>{fetchNextPage()}}
+                onEndReached={()=>{
+                    ref.scrollToIndex({
+                        animated: true,
+                        index: 0,
+                        viewPosition: 1
+                      });
+                    fetchNextPage();
+                }}
             />
             </SafeAreaView>
         );
