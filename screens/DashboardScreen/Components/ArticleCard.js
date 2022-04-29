@@ -1,9 +1,12 @@
 import React from 'react';
-import { SafeAreaView, View, RefreshControl, Image, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+import { Dimensions, SafeAreaView, View, RefreshControl, Image, Platform, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Subheading, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import handleUpdateArticles from "../../DashboardScreen/handlers/articles"
+
+const ScreenHeight = Dimensions.get("window").height;
+const ScreenWidth = Dimensions.get("window").width;
 
 export const  Cards = ({fetchNextPage}) => {
     
@@ -27,7 +30,7 @@ export const  Cards = ({fetchNextPage}) => {
                 <Card.Title title={title} subtitle={subtitle} ></Card.Title>
                 <Card.Content>
                     <Paragraph >{abstract}</Paragraph> 
-                    {media==""?<></>:<Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
+                    {media==""?null:<Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
                     {viewContent==id?
                     <View style={styles.subheading}>
                         <Subheading>{content}</Subheading>
@@ -36,7 +39,7 @@ export const  Cards = ({fetchNextPage}) => {
             </Card>
         );
 
-    // every 130 words is about 1 minute of speech depending on what I googled. ..
+    // every 130 words is about 1 minute of speech according to what I googled. ..
     const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()}; 
     const articlesList = useSelector((state) => state.articlesReducer.articles);
     
@@ -84,12 +87,13 @@ export const  Cards = ({fetchNextPage}) => {
 
 const styles = StyleSheet.create({
     image: {
-        maxHeight: "300px", 
-        maxWidth: "300px",
-        margin: 5, 
-        resizeMode:"cover",
-        borderRadius:5 
-      },
+        height: (Platform.OS == "ios"|| Platform.OS =="android")?ScreenHeight*0.3:ScreenHeight*0.4, 
+        width: (Platform.OS == "ios"|| Platform.OS =="android")?ScreenWidth*0.9:ScreenWidth*0.5, 
+        margin: 3, 
+        resizeMode:"contain",
+        borderRadius:7,
+        alignSelf:"center",
+    },
     subheading:{
         backgroundColor:"rgb(240,240,240)",
         borderRadius:10, 
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
     },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
     backgroundColor: '#f9c2ff',

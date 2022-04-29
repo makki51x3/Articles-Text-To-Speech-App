@@ -1,4 +1,4 @@
-import { Dimensions, ActivityIndicator, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
+import { Dimensions, SafeAreaView, ActivityIndicator, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
 import background from '../../assets/background.png' // relative path to image 
 import { useState } from 'react';
 import axios from "axios";
@@ -53,34 +53,36 @@ export default function LoginScreen({navigation}) {
   };
 
   return (
-    <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
-      <View style={styles.container}>
-        <TextInput
-        onChangeText={(username) => {setUserName(username);}}
-        placeholder={userplaceholder}
-        style={[styles.input,{marginTop:0.07*ScreenHeight}]}
-        />
-        <TextInput
-        onChangeText={(password) => {setPassword(password);}}
-        placeholder={passplaceholder}
-        secureTextEntry={true}
-        style={styles.input}
-        />
-        {loginFailed?<Text style={{color:"red", fontWeight:"700"}}> Invalid username or password!</Text>:<></>}
-        <View style={{flexDirection:"row"}}>
-          <TouchableOpacity
-            style={styles.btn}
-            disabled={username=="" || password=="" || loading==true}
-            onPress={()=>{
-              login(username,password);
-            }}
-            underlayColor='#fff'>
-            <Text style={styles.text}>Login</Text>
-          </TouchableOpacity>
-          {loading?<ActivityIndicator size="small" color="white" style={{marginLeft:15}} />:<></>}
+    <SafeAreaView style={{flex:1}}>
+      <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
+        <View style={styles.container}>
+          <TextInput
+          onChangeText={(username) => {setUserName(username);}}
+          placeholder={userplaceholder}
+          style={[styles.input,{marginTop:0.07*ScreenHeight}]}
+          />
+          <TextInput
+          onChangeText={(password) => {setPassword(password);}}
+          placeholder={passplaceholder}
+          secureTextEntry={true}
+          style={styles.input}
+          />
+          {loginFailed?<Text style={{color:"red", fontWeight:"700"}}> Invalid username or password!</Text>:<></>}
+          <View style={{flexDirection:"row"}}>
+            <TouchableOpacity
+              style={styles.btn}
+              disabled={username=="" || password=="" || loading==true}
+              onPress={()=>{
+                login(username,password);
+              }}
+              underlayColor='#fff'>
+              <Text style={styles.text}>Login</Text>
+            </TouchableOpacity>
+            {loading?<ActivityIndicator size="small" color="white" style={{marginLeft:15}} />:<></>}
+          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </SafeAreaView>
   );
 }
 

@@ -1,4 +1,4 @@
-import {  StatusBar, ActivityIndicator, StyleSheet,ImageBackground, Platform, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {  StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground, Platform, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
@@ -47,13 +47,14 @@ export default function DashboardScreen({navigation}) {
     }
   
   return (
+    <SafeAreaView style={{flex:1}}>
+      <StatusBar hidden={true} />
       <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
-        <View style={{width:(Platform.OS == "ios"||Platform.OS =="android")?"100%":"70%", flex:1}}> 
-          <StatusBar hidden={true} />
-          <Appbar style={{backgroundColor:"rgb(31, 20, 99)",justifyContent:"space-between",marginTop:Platform.OS == "ios"?30:StatusBar.currentHeight}}>
+        <View style={{width:(Platform.OS == "ios"||Platform.OS =="android")?"100%":"60%", flex:1}}> 
+          <Appbar style={{backgroundColor:"rgb(31, 20, 99)",justifyContent:"space-between"}}>
             <Appbar.BackAction onPress={()=>{logOut()}} />
             {searchBarVisible?
-            <View style={{width:"50%"}}>
+            <View style={{width:"70%"}}>
               <TextInput 
               onChangeText={(filter) => {setFilter(filter);}} 
               placeholder="Search articles"
@@ -68,8 +69,7 @@ export default function DashboardScreen({navigation}) {
           </View>
         </View>
       </ImageBackground>    
-    
-  
+    </SafeAreaView>
   );
 }
           
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex:1,
     textAlign: 'center',
-    padding:5,
+    padding:1,
     margin:10,
     borderWidth: 1,
     borderColor: 'black',
