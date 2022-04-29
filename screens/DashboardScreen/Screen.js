@@ -4,16 +4,16 @@ import { useState } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
 import axios from "axios";
 import { Appbar } from 'react-native-paper';
-import handleUpdateAccessToken from "../DashboardScreen/handlers/accessToken" 
-import handleUpdateArticles from "../DashboardScreen/handlers/articles"
+import {handleUpdateAccessToken} from "../DashboardScreen/handlers/accessToken" 
+import {handleUpdateArticles, handleUpdatePageNumber} from "../DashboardScreen/handlers/articles"
 import {Cards} from './Components/ArticleCard';
 
 export default function DashboardScreen({navigation}) {
   const [loading, setloading] = useState(false);
   const [filter, setFilter] = useState("this is the filter");
-  const [pageNumber, setPageNumber] = useState(0);
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const authentication = useSelector((state) => state.authenticationReducer.accessToken);
+  const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
   const dispatch = useDispatch();
 
   const fetchNextPage = () => {
@@ -28,7 +28,7 @@ export default function DashboardScreen({navigation}) {
       console.log(response);
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
         handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
-        setPageNumber(pageNumber+1); // increment page number
+        handleUpdatePageNumber(pageNumber+1); // increment page number
       }
     },
     (error) => { // display login failed and reset placeholders

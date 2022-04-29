@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
   
   const initialState = {
-    articles: []
+    articles: [],
+    currentPageNumber: 0,
   };
   
   export const articlesSlice = createSlice({
@@ -10,10 +11,13 @@ import { createSlice } from "@reduxjs/toolkit";
     reducers: {
       updateArticles: (state, action) => {
         state.articles.push(action.payload);
+      },
+      updatePageNumber: (state,action)=>{
+        state.currentPageNumber=state.currentPageNumber+1;
       }
     },
   });
   
-  export const { updateArticles } = articlesSlice.actions;
+  export const { updateArticles, updatePageNumber } = articlesSlice.actions;
   
   export default articlesSlice.reducer;
