@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex:1,
     textAlign: 'center',
-    padding:1,
+    padding:(Platform.OS=="ios"||Platform.OS=="android")?1:4,
     margin:10,
     borderWidth: 1,
     borderColor: 'black',
