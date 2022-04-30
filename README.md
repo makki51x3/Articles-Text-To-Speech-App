@@ -56,9 +56,9 @@ I used Visual Studio Code to compile and run the code and the Expo framework to 
 
 • The login credentials for successful login:
 
-• Username: candidate
+- Username: candidate
 
-• Password: P@ssw0rd 
+- Password: P@ssw0rd 
 
 # How to Run the App 
 
