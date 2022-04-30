@@ -8,7 +8,7 @@ import {handleUpdateArticles, handleUpdatePageNumber} from "../../DashboardScree
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
 
-export const  Cards = ({fetchNextPage, searchBarVisible}) => {
+export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
     
     useEffect(() => { // load data only once on mount
         fetchNextPage(); 
@@ -20,7 +20,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible}) => {
     const [ref, setRef] = useState(null);
     
     const callRefreshControl = () => {
-        console.log(articlesList);
+        // console.log(articlesList);
         setRefresh(true);
         handleUpdateArticles("",dispatch); // reset list of articles in redux store
         handleUpdatePageNumber(0,dispatch); // reset page number
@@ -43,9 +43,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible}) => {
         );
 
     // every 130 words is about 1 minute of speech according to what I googled. ..
-    const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()}; 
-    const articlesList = useSelector((state) => state.articlesReducer.filteredArticles);
-    
+    const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()};     
     const renderItem = ({ item,index }) => (
         <Item 
         id = {item["_id"]}

@@ -17,11 +17,12 @@ import { createSlice } from "@reduxjs/toolkit";
         state.currentPageNumber=action.payload;
       },
       updateFilteredArticles: (state, action) => {
-        console.log("state payload slice",action.payload);
+        // console.log("state payload slice",action.payload);
+        state.filteredArticles=[];
         state.filteredArticles=[];
         if(action.payload.currentList!=[]){
-            action.payload.currentList.forEach((element,index) => {
-                if(element.abstract.includes(action.payload.filter) || element.headline.main.includes(action.payload.filter)){
+            action.payload.currentList.forEach((element) => {
+                if(element.abstract.toLowerCase().includes(action.payload.filter) || element.headline.main.toLowerCase().includes(action.payload.filter)){
                     state.filteredArticles.push(element);
                 }
             }); 

@@ -50,14 +50,15 @@ export default function DashboardScreen({navigation}) {
   }
 
   const handleSearch = () => {
-    if (searchBarVisible==true){console.log("Filter:\t",filter,"\nfiltered articles",filteredArticles,"\narticles",articles);}
+    // if (searchBarVisible==true){console.log("Filter:\t",filter,"\nfiltered articles",filteredArticles,"\narticles",articles);}
+    setFilter("");
     setSearchBarVisible(!searchBarVisible);
   }
 
   useEffect(() => {
     return () => {
       if(searchBarVisible==false){
-        console.log("filter before calling: updateFilteredArticles is\n",filter);
+        // console.log("filter before calling: updateFilteredArticles is\n",filter);
         handleUpdateFilteredArticles(filter, articles, dispatch);
       }
     }
@@ -66,7 +67,7 @@ export default function DashboardScreen({navigation}) {
   
   return (
     <SafeAreaView style={{flex:1}}>
-      <StatusBar hidden={true} />
+      <StatusBar hidden={false} />
       <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
         <View style={{width:(Platform.OS == "ios"||Platform.OS =="android")?"100%":"60%", flex:1}}> 
           <Appbar.Header style={{backgroundColor:"rgb(31, 20, 99)",  justifyContent:"space-between"}}>
@@ -76,7 +77,7 @@ export default function DashboardScreen({navigation}) {
                 <View style={{width:"70%"}}>
                   <TextInput 
                   onChangeText={(filter) => {     
-                    console.log("onchange filter is\n",filter);
+                    // console.log("onchange filter is\n",filter);
                     handleUpdateFilteredArticles(filter, articles, dispatch);
                   }} 
                   placeholder="Search articles"
@@ -93,7 +94,7 @@ export default function DashboardScreen({navigation}) {
               <Appbar.Action icon="magnify" onPress={()=>{handleSearch()}} />
           </Appbar.Header>
           <View style={[styles.container,{backgroundColor:"rgba(0, 0, 0,0.77)"}]}>
-            <Cards searchBarVisible={searchBarVisible} fetchNextPage={()=>{fetchNextPage()}}></Cards>
+            <Cards articlesList={searchBarVisible?filteredArticles:articles} searchBarVisible={searchBarVisible} fetchNextPage={()=>{fetchNextPage()}}></Cards>
             {loading?<View style={{height:45}}><ActivityIndicator size="large" color="white" /></View>:<></>}
           </View>
         </View>
