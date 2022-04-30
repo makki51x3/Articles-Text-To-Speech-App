@@ -4,4 +4,8 @@ import articlesReducer from "./feature/articlesSlice";
 
 export const store = configureStore({
     reducer:{authenticationReducer,articlesReducer},
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        immutableCheck: false,
+        serializableCheck: false,
+      }) // disable middleware warnings
 });
