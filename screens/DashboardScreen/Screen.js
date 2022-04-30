@@ -74,7 +74,10 @@ export default function DashboardScreen({navigation}) {
               searchBarVisible?
                 <View style={{width:"70%"}}>
                   <TextInput 
-                  onChangeText={(filter) => {setFilter(filter);}} 
+                  onChangeText={(filter) => {     
+                    console.log("onchange filter is\n",filter);
+                    handleUpdateFilteredArticles(filter, articles, dispatch);
+                  }} 
                   placeholder="Search articles"
                   style={styles.searchInput} 
                   />

@@ -18,11 +18,12 @@ import { createSlice } from "@reduxjs/toolkit";
       },
       updateFilteredArticles: (state, action) => {
         console.log("state payload slice",action.payload);
+        state.filteredArticles=[];
         if(action.payload.currentList!=""){
             action.payload.currentList.forEach((element,index) => {
-                if(element.abstract.includes(action.payload.filter)){
-                    console.log("found hereeee:",element.abstract);
-                };
+                if(element.abstract.includes(action.payload.filter) || element.headline.main.includes(action.payload.filter)){
+                    state.filteredArticles.push(element);
+                }
             }); 
         }
       },
