@@ -12,7 +12,6 @@ import { Ionicons } from '@expo/vector-icons';
 export default function DashboardScreen({navigation}) {
 
   const [loading, setloading] = useState(false);
-  const [filter, setFilter] = useState("");
   const [searchBarVisible, setSearchBarVisible] = useState(false);
 
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
