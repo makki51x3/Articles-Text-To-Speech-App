@@ -91,10 +91,11 @@ More information can be found here: https://docs.expo.dev/get-started/installati
 
 • Better code commentary 
 
-• The use of Docker container to deploy the application
+• The use of Docker container to deploy the application on the cloud
 
 • Better file structure and architecture tweaks 
 
 # Prototype (IOS/Web/Android)
+
 <img src="https://user-images.githubusercontent.com/96151955/166102677-edee71c2-2a6f-4830-bcb6-d56741ec934c.png" alt="IOS" width="200" height="420" /><img src="https://user-images.githubusercontent.com/96151955/166103633-b3d5a2c9-8808-45e3-b57e-352618c0ba3b.png" alt="laptop" height="420"/><img src="https://user-images.githubusercontent.com/96151955/166103467-018d4d32-5a62-49cf-9aac-bed4c7943aea.png" alt="android" width="200" height="420"/>
 
