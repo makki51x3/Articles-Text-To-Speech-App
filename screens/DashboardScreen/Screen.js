@@ -20,6 +20,7 @@ export default function DashboardScreen({navigation}) {
   const filteredArticles = useSelector((state) => state.articlesReducer.filteredArticles);
   const articles = useSelector((state) => state.articlesReducer.articles);
 
+
   const dispatch = useDispatch();
 
   const fetchNextPage = () => {
