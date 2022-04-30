@@ -17,12 +17,11 @@ import { createSlice } from "@reduxjs/toolkit";
         state.currentPageNumber=action.payload;
       },
       updateFilteredArticles: (state, action) => {
-        // console.log("state payload slice",action.payload);
-        state.filteredArticles=[];
         state.filteredArticles=[];
         if(action.payload.currentList!=[]){
             action.payload.currentList.forEach((element) => {
-                if(element.abstract.toLowerCase().includes(action.payload.filter) || element.headline.main.toLowerCase().includes(action.payload.filter)){
+                // should work irrelevant of the letter case
+                if(element.abstract.toLowerCase().includes(action.payload.filter.toLowerCase()) || element.headline.main.toLowerCase().includes(action.payload.filter.toLowerCase())){
                     state.filteredArticles.push(element);
                 }
             }); 

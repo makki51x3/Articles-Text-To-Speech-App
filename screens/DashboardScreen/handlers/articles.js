@@ -13,7 +13,6 @@ export const handleUpdatePageNumber = (num,dispatch) => {
 }; 
 
 export const handleUpdateFilteredArticles = (filter,currentList, dispatch) => {
-    // if (!Number.isInteger(num)) return;  // check that number is an integer
     dispatch(updateFilteredArticles({filter,currentList}));
 }; 
 

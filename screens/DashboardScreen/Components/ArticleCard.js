@@ -15,17 +15,13 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
     }, []);
 
     const dispatch = useDispatch();
-    const [refresh, setRefresh] = useState(false);
     const [viewContent, setViewContent] = useState("");
     const [ref, setRef] = useState(null);
     
     const callRefreshControl = () => {
-        // console.log(articlesList);
-        setRefresh(true);
         handleUpdateArticles("",dispatch); // reset list of articles in redux store
         handleUpdatePageNumber(0,dispatch); // reset page number
-        fetchNextPage();
-        setRefresh(false);
+        fetchNextPage();   //fetch page 0
         }
     
     const Item = ({ title, subtitle, abstract, id, content, media }) => (
@@ -69,7 +65,6 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
             <FlatList
                 refreshControl={
                     <RefreshControl
-                    refreshing={refresh}
                     onRefresh={()=>{callRefreshControl()}}
                     />
                 }
