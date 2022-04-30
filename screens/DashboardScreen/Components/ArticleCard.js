@@ -8,7 +8,7 @@ import {handleUpdateArticles, handleUpdatePageNumber} from "../../DashboardScree
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
 
-export const  Cards = ({fetchNextPage}) => {
+export const  Cards = ({fetchNextPage, searchBarVisible}) => {
     
     useEffect(() => { // load data only once on mount
         fetchNextPage(); 
@@ -86,12 +86,13 @@ export const  Cards = ({fetchNextPage}) => {
                   }}
                 onEndReachedThreshold={0}
                 onEndReached={()=>{
+                    if(!searchBarVisible){
                     ref.scrollToIndex({
                         animated: true,
                         index: 0,
                         viewPosition: 1
                       });
-                    fetchNextPage();
+                    fetchNextPage();}
                 }}
             />
             </SafeAreaView>

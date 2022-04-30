@@ -15,10 +15,20 @@ import { createSlice } from "@reduxjs/toolkit";
       },
       updatePageNumber: (state,action)=>{
         state.currentPageNumber=action.payload;
-      }
+      },
+      updateFilteredArticles: (state, action) => {
+        console.log("state payload slice",action.payload);
+        if(action.payload.currentList!=""){
+            action.payload.currentList.forEach((element,index) => {
+                if(element.abstract.includes(action.payload.filter)){
+                    console.log("found hereeee:",element.abstract);
+                };
+            }); 
+        }
+      },
     },
   });
   
-  export const { updateArticles, updatePageNumber } = articlesSlice.actions;
+  export const { updateFilteredArticles, updateArticles, updatePageNumber } = articlesSlice.actions;
   
   export default articlesSlice.reducer;

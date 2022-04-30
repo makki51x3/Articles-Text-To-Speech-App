@@ -1,22 +1,25 @@
 import {  StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground, Platform, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
 import axios from "axios";
 import { Appbar } from 'react-native-paper';
 import {handleUpdateAccessToken} from "./handlers/authentication" 
-import {handleUpdateArticles, handleUpdatePageNumber} from "../DashboardScreen/handlers/articles"
+import {handleUpdateArticles, handleUpdateFilteredArticles, handleUpdatePageNumber} from "../DashboardScreen/handlers/articles"
 import {Cards} from './Components/ArticleCard';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function DashboardScreen({navigation}) {
 
   const [loading, setloading] = useState(false);
-  const [filter, setFilter] = useState("this is the filter");
+  const [filter, setFilter] = useState("");
   const [searchBarVisible, setSearchBarVisible] = useState(false);
 
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
+  const filteredArticles = useSelector((state) => state.articlesReducer.filteredArticles);
+  const articles = useSelector((state) => state.articlesReducer.articles);
+
   const dispatch = useDispatch();
 
   const fetchNextPage = () => {
@@ -40,15 +43,25 @@ export default function DashboardScreen({navigation}) {
     });
   };
 
-    const logOut = () => {        
-      handleUpdateAccessToken("",dispatch); // reset access token in redux store
-      navigation.navigate("LoginScreen"); // navigate to Login Screen
-    }
+  const logOut = () => {        
+    handleUpdateAccessToken("",dispatch); // reset access token in redux store
+    navigation.navigate("LoginScreen"); // navigate to Login Screen
+  }
 
-    const handleSearch = () => {
-      if (searchBarVisible==true){console.log("Filter:\t"+filter);}
-      setSearchBarVisible(!searchBarVisible);
+  const handleSearch = () => {
+    if (searchBarVisible==true){console.log("Filter:\t",filter,"\nfiltered articles",filteredArticles,"\narticles",articles);}
+    setSearchBarVisible(!searchBarVisible);
+  }
+
+  useEffect(() => {
+    return () => {
+      if(searchBarVisible==false){
+        console.log("filter before calling: updateFilteredArticles is\n",filter);
+        handleUpdateFilteredArticles(filter, articles, dispatch);
+      }
     }
+  }, [filter]);
+  
   
   return (
     <SafeAreaView style={{flex:1}}>
@@ -76,7 +89,7 @@ export default function DashboardScreen({navigation}) {
               <Appbar.Action icon="magnify" onPress={()=>{handleSearch()}} />
           </Appbar.Header>
           <View style={[styles.container,{backgroundColor:"rgba(0, 0, 0,0.77)"}]}>
-            <Cards fetchNextPage={()=>{fetchNextPage()}}></Cards>
+            <Cards searchBarVisible={searchBarVisible} fetchNextPage={()=>{fetchNextPage()}}></Cards>
             {loading?<View style={{height:45}}><ActivityIndicator size="large" color="white" /></View>:<></>}
           </View>
         </View>

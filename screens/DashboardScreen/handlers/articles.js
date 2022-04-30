@@ -1,4 +1,4 @@
-import {updateArticles, updatePageNumber} from '../../../redux/feature/articlesSlice'
+import {updateArticles, updateFilteredArticles, updatePageNumber} from '../../../redux/feature/articlesSlice'
 
 export const handleUpdateArticles = (batch,dispatch) => {
     if (!batch) return;        // check that batch is not an empty list
@@ -12,4 +12,9 @@ export const handleUpdatePageNumber = (num,dispatch) => {
     dispatch(updatePageNumber(num));
 }; 
 
-export default {handleUpdateArticles,handleUpdatePageNumber};
+export const handleUpdateFilteredArticles = (filter,currentList, dispatch) => {
+    // if (!Number.isInteger(num)) return;  // check that number is an integer
+    dispatch(updateFilteredArticles({filter,currentList}));
+}; 
+
+export default {handleUpdateArticles,handleUpdateFilteredArticles,handleUpdatePageNumber};
