@@ -62,8 +62,8 @@ I used Visual Studio Code to compile and run the code and the Expo framework to 
 
 # How to Run the App 
 
-More information can be found here: https://docs.expo.dev/guides/sharing-preview-releases/
 ## On Mobile
+More information can be found here: https://docs.expo.dev/guides/sharing-preview-releases/
 
 • Download Expo Go App from Apple store or Play store ( search expo )
 
@@ -76,10 +76,12 @@ More information can be found here: https://docs.expo.dev/guides/sharing-preview
   ![image](https://user-images.githubusercontent.com/96151955/166103920-e998fd7e-f32f-4327-b2f8-05cc1549277a.png)
 
 ## On Web
+More information can be found here: https://docs.expo.dev/get-started/installation/
 
-• Download and install
-
-• Open command line or terminal and run the expo application 
+• Download and install Node.js LTS release from: https://nodejs.org/en/
+• Install expo-cli (in your command line or terminal, run: *npm install --global expo-cli* )
+• Clone this repository
+• Open command line or terminal and run in cloned directory and run: *expo start* or *npm start*
 
 # Coming Soon
 
