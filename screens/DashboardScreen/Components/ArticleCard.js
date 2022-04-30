@@ -18,7 +18,6 @@ export const  Cards = ({fetchNextPage, searchBarVisible}) => {
     const [refresh, setRefresh] = useState(false);
     const [viewContent, setViewContent] = useState("");
     const [ref, setRef] = useState(null);
-    const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
     
     const callRefreshControl = () => {
         console.log(articlesList);
