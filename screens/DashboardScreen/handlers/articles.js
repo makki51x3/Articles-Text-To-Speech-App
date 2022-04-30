@@ -1,10 +1,13 @@
-import {updateArticles, updateFilteredArticles, updatePageNumber} from '../../../redux/feature/articlesSlice'
+import {updateArticles, resetArticles, updateFilteredArticles, updatePageNumber} from '../../../redux/feature/articlesSlice'
 
-export const handleUpdateArticles = (batch,dispatch) => {
-    if (!batch) return;        // check that batch is not an empty list
-    batch.forEach(element => {
-      dispatch(updateArticles(element));
-    });
+export const handleUpdateArticles = (batch,dispatch) => {        
+    if (batch){ // check that batch is not an empty list
+        batch.forEach(element => {
+        dispatch(updateArticles(element));
+        });
+    }else{
+        dispatch(resetArticles());
+    }
 }; 
 
 export const handleUpdatePageNumber = (num,dispatch) => {

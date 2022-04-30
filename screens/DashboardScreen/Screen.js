@@ -11,21 +11,35 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function DashboardScreen({navigation}) {
 
+  // useState Hooks for UI interactions
   const [loading, setloading] = useState(false);
   const [searchBarVisible, setSearchBarVisible] = useState(false);
-
+  const [refresh, setRefresh] = useState(false);
+  // useSelector hook to get data from the redux store
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
   const filteredArticles = useSelector((state) => state.articlesReducer.filteredArticles);
   const articles = useSelector((state) => state.articlesReducer.articles);
 
-
   const dispatch = useDispatch();
+
+  useEffect(() => {  
+    return () => {
+      handleUpdateArticles("",dispatch); // reset list of articles in redux store
+      handleUpdatePageNumber(0,dispatch); // reset page number
+      fetchNextPage();   //fetch page 0
+    }
+  }, [refresh]); // when the refresh button is toggled the useEffect is activated
 
   const fetchNextPage = () => {
     setloading(true);
     // Setup required http headers
-    const config = { headers: {'accept': 'application/json', "Authorization": "Bearer " + accessToken}};
+    const config = { 
+      headers: {
+      'accept': 'application/json', 
+      "Authorization": "Bearer " + accessToken
+      }
+    };
     // Initiate a post request with username and password to Login API
     axios.get("http://34.245.213.76:3000" + "/articles?page="+pageNumber, config)
     .then((response) => { 
@@ -36,22 +50,23 @@ export default function DashboardScreen({navigation}) {
         handleUpdatePageNumber(pageNumber+1, dispatch); // increment page number
       }
     },
-    (error) => { // display login failed and reset placeholders
+    (error) => { // catch error and stop loading indicator
       setloading(false);
     });
   };
 
   const logOut = () => {        
     handleUpdateAccessToken("",dispatch); // reset access token in redux store
+    setRefresh(!refresh); // refresh screen
     navigation.navigate("LoginScreen"); // navigate to Login Screen
   }
   
   return (
     <SafeAreaView style={{flex:1}}>
-      <StatusBar hidden={false} />
+      <StatusBar hidden={false} /> 
       <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
-        <View style={{width:(Platform.OS == "ios"||Platform.OS =="android")?"100%":"60%", flex:1}}> 
-          <Appbar.Header style={{backgroundColor:"rgb(31, 20, 99)",  justifyContent:"space-between"}}>
+        <View style={styles.AppContainer}> 
+          <Appbar.Header style={styles.AppBarHeader}>
             <Appbar.BackAction onPress={()=>{logOut()}} />
               {
               searchBarVisible?
@@ -67,15 +82,23 @@ export default function DashboardScreen({navigation}) {
               }
               {
               (Platform.OS!="android" && Platform.OS!="ios")?
-              <TouchableOpacity onPress={()=>{{/* call cards function using redux */}}}>
+              <TouchableOpacity onPress={()=>{setRefresh(!refresh)}}>
                 <Ionicons name="reload" size={20} color="white"/>
               </TouchableOpacity>:null
               }
               <Appbar.Action icon="magnify" onPress={()=>{setSearchBarVisible(!searchBarVisible)}} />
           </Appbar.Header>
-          <View style={[styles.container,{backgroundColor:"rgba(0, 0, 0,0.77)"}]}>
-            <Cards articlesList={searchBarVisible?filteredArticles:articles} searchBarVisible={searchBarVisible} fetchNextPage={()=>{fetchNextPage()}}></Cards>
-            {loading?<View style={{height:45}}><ActivityIndicator size="large" color="white" /></View>:<></>}
+          <View style={styles.containerOpacity}>
+            <Cards 
+              articlesList={searchBarVisible?filteredArticles:articles} 
+              searchBarVisible={searchBarVisible} 
+              fetchNextPage={()=>{fetchNextPage()}}>
+            </Cards>
+            {loading?
+            <View style={{height:45}}>
+              <ActivityIndicator size="large" color="white" />
+            </View>
+            :<></>}
           </View>
         </View>
       </ImageBackground>    
@@ -86,6 +109,20 @@ export default function DashboardScreen({navigation}) {
 
 
 const styles = StyleSheet.create({
+  containerOpacity:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:"rgba(0, 0, 0,0.77)"
+    },
+  AppBarHeader:{
+    backgroundColor:"rgb(31, 20, 99)",  
+    justifyContent:"space-between"
+  },
+  AppContainer:{
+    width: (Platform.OS == "ios"||Platform.OS =="android")?"100%":"60%", 
+    flex:1
+  },
   btn:{
     marginVertical:10,
     paddingVertical:5,

@@ -13,6 +13,9 @@ import { createSlice } from "@reduxjs/toolkit";
       updateArticles: (state, action) => {
         state.articles.push(action.payload);
       },
+      resetArticles: (state, action) => {
+        state.articles=[];
+      },
       updatePageNumber: (state,action)=>{
         state.currentPageNumber=action.payload;
       },
@@ -30,6 +33,6 @@ import { createSlice } from "@reduxjs/toolkit";
     },
   });
   
-  export const { updateFilteredArticles, updateArticles, updatePageNumber } = articlesSlice.actions;
+  export const { updateFilteredArticles, resetArticles, updateArticles, updatePageNumber } = articlesSlice.actions;
   
   export default articlesSlice.reducer;
