@@ -71,7 +71,7 @@ More information can be found here: https://docs.expo.dev/guides/sharing-preview
 
 • Access the application using:
   ### *Link*
-  exp://exp.host/@51x3/interview_challenge?release-channel=default
+  exp.host/@51x3/interview_challenge?release-channel=default
   ### *QR Code*
   ![image](https://user-images.githubusercontent.com/96151955/166103920-e998fd7e-f32f-4327-b2f8-05cc1549277a.png)
 
