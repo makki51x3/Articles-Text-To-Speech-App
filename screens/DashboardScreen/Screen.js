@@ -14,6 +14,8 @@ export default function DashboardScreen({navigation}) {
   // useState Hooks for UI interactions
   const [loading, setloading] = useState(false);
   const [searchBarVisible, setSearchBarVisible] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+
   // useSelector hook to get data from the redux store
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
@@ -22,11 +24,9 @@ export default function DashboardScreen({navigation}) {
 
   const dispatch = useDispatch();
 
-  const refresh = () => {        
-    handleResetArticles(dispatch);           // reset articles in store
-    handleResetPageNumber(dispatch); // reset page number
-    fetchNextPage(); // refetch data
-  }
+  useEffect(() => { // load data only once on mount
+    fetchNextPage(); 
+  }, [refresh]);
 
   const logOut = () => {        
     handleUpdateAccessToken("",dispatch); // reset access token in redux store
@@ -63,6 +63,12 @@ export default function DashboardScreen({navigation}) {
       setloading(false);
     });
   };
+
+  const refreshPressed = ()=>{
+    handleResetArticles(dispatch);           // reset articles in store
+    handleResetPageNumber(dispatch); // reset page number
+    setRefresh(!refresh);
+  };
   
   return (
     <SafeAreaView style={{flex:1}}>
@@ -85,7 +91,7 @@ export default function DashboardScreen({navigation}) {
               }
               {
               (Platform.OS!="android" && Platform.OS!="ios")?
-              <TouchableOpacity onPress={()=>{refresh()}}>
+              <TouchableOpacity onPress={()=>{refreshPressed()}}>
                 <Ionicons name="reload" size={20} color="white"/>
               </TouchableOpacity>:null
               }

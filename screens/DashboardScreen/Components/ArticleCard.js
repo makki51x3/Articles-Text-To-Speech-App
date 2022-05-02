@@ -10,10 +10,6 @@ const ScreenWidth = Dimensions.get("window").width;
 
 export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
     
-    useEffect(() => { // load data only once on mount
-        fetchNextPage(); 
-    }, []);
-
     const dispatch = useDispatch();
     const [viewContent, setViewContent] = useState("");
     const [ref, setRef] = useState(null);
@@ -83,7 +79,8 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
                         index: 0,
                         viewPosition: 1
                       });
-                    fetchNextPage();}
+                      fetchNextPage(); 
+                    }
                 }}
             />
             </SafeAreaView>
