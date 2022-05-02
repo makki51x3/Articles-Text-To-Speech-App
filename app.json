@@ -28,6 +28,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": ""
+    "description": "A ReactJS application that communicates with a blogging API to allow users to sign in, view, and filter different articles in a user friendly manner.",
+    "githubUrl": "https://github.com/makki51x3/interview_challenge/"
   }
 }
