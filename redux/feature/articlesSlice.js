@@ -14,10 +14,13 @@ import { createSlice } from "@reduxjs/toolkit";
         state.articles.push(action.payload);
       },
       resetArticles: (state, action) => {
-        state.articles=[];
+        state.articles= [];
       },
-      updatePageNumber: (state,action)=>{
-        state.currentPageNumber=action.payload;
+      resetPageNumber: (state,action)=>{
+        state.currentPageNumber=0;
+      },
+      incrementPageNumber: (state,action)=>{
+        state.currentPageNumber=state.currentPageNumber+1;
       },
       updateFilteredArticles: (state, action) => {
         state.filteredArticles=[];
@@ -33,6 +36,13 @@ import { createSlice } from "@reduxjs/toolkit";
     },
   });
   
-  export const { updateFilteredArticles, resetArticles, updateArticles, updatePageNumber } = articlesSlice.actions;
+    export const { 
+        updateFilteredArticles, 
+        resetArticles, 
+        updateArticles, 
+        updatePageNumber,
+        incrementPageNumber,
+        resetPageNumber,
+        } = articlesSlice.actions;
   
   export default articlesSlice.reducer;

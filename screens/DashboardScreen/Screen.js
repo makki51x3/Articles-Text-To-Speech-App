@@ -5,7 +5,7 @@ import background from '../../assets/dashBoardBG.png' // relative path to image
 import axios from "axios";
 import { Appbar } from 'react-native-paper';
 import {handleUpdateAccessToken} from "./handlers/authentication" 
-import {handleUpdateArticles, handleUpdateFilteredArticles, handleUpdatePageNumber} from "../DashboardScreen/handlers/articles"
+import {handleUpdateArticles, handleResetArticles, handleUpdateFilteredArticles, handleResetPageNumber} from "../DashboardScreen/handlers/articles"
 import {Cards} from './Components/ArticleCard';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,7 +14,6 @@ export default function DashboardScreen({navigation}) {
   // useState Hooks for UI interactions
   const [loading, setloading] = useState(false);
   const [searchBarVisible, setSearchBarVisible] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   // useSelector hook to get data from the redux store
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
@@ -23,13 +22,24 @@ export default function DashboardScreen({navigation}) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {  
-    return () => {
-      handleUpdateArticles("",dispatch); // reset list of articles in redux store
-      handleUpdatePageNumber(0,dispatch); // reset page number
-      fetchNextPage();   //fetch page 0
-    }
-  }, [refresh]); // when the refresh button is toggled the useEffect is activated
+  const refresh = () => {        
+    handleResetArticles(dispatch);           // reset articles in store
+    handleResetPageNumber(dispatch); // reset page number
+    fetchNextPage(); // refetch data
+  }
+
+  const logOut = () => {        
+    handleUpdateAccessToken("",dispatch); // reset access token in redux store
+    handleResetPageNumber(dispatch); // reset page number
+    handleResetArticles(dispatch);           // reset articles in store
+    navigation.navigate("LoginScreen"); // navigate to Login Screen
+  }
+    //   return () => {
+  //     handleUpdateArticles("",dispatch); // reset list of articles in redux store
+  //     handleUpdatePageNumber(0,dispatch); // reset page number
+  //     fetchNextPage();   //fetch page 0
+  //   }
+  // }, [refresh]); // when the refresh button is toggled the useEffect is activated
 
   const fetchNextPage = () => {
     setloading(true);
@@ -47,19 +57,12 @@ export default function DashboardScreen({navigation}) {
       setloading(false);
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
         handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
-        handleUpdatePageNumber(pageNumber+1, dispatch); // increment page number
       }
     },
     (error) => { // catch error and stop loading indicator
       setloading(false);
     });
   };
-
-  const logOut = () => {        
-    handleUpdateAccessToken("",dispatch); // reset access token in redux store
-    setRefresh(!refresh); // refresh screen
-    navigation.navigate("LoginScreen"); // navigate to Login Screen
-  }
   
   return (
     <SafeAreaView style={{flex:1}}>
@@ -82,7 +85,7 @@ export default function DashboardScreen({navigation}) {
               }
               {
               (Platform.OS!="android" && Platform.OS!="ios")?
-              <TouchableOpacity onPress={()=>{setRefresh(!refresh)}}>
+              <TouchableOpacity onPress={()=>{refresh()}}>
                 <Ionicons name="reload" size={20} color="white"/>
               </TouchableOpacity>:null
               }

@@ -1,22 +1,24 @@
-import {updateArticles, resetArticles, updateFilteredArticles, updatePageNumber} from '../../../redux/feature/articlesSlice'
+import {updateArticles, resetArticles, updateFilteredArticles, incrementPageNumber, resetPageNumber} from '../../../redux/feature/articlesSlice'
 
 export const handleUpdateArticles = (batch,dispatch) => {        
     if (batch){ // check that batch is not an empty list
-        batch.forEach(element => {
-        dispatch(updateArticles(element));
-        });
-    }else{
-        dispatch(resetArticles());
+    batch.forEach(element => {
+    dispatch(updateArticles(element));
+    });
+    dispatch(incrementPageNumber());
     }
 }; 
 
-export const handleUpdatePageNumber = (num,dispatch) => {
-    if (!Number.isInteger(num)) return;  // check that number is an integer
-    dispatch(updatePageNumber(num));
+export const handleResetArticles = (dispatch) => {        
+    dispatch(resetArticles());
 }; 
+
+export const handleResetPageNumber = (dispatch) => {
+    dispatch(resetPageNumber());
+};
 
 export const handleUpdateFilteredArticles = (filter,currentList, dispatch) => {
     dispatch(updateFilteredArticles({filter,currentList}));
 }; 
 
-export default {handleUpdateArticles,handleUpdateFilteredArticles,handleUpdatePageNumber};
+export default {handleUpdateArticles,handleResetArticles,handleUpdateFilteredArticles,handleResetPageNumber};

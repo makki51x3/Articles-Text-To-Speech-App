@@ -3,7 +3,7 @@ import { Dimensions, SafeAreaView, View, RefreshControl, Image, Platform, FlatLi
 import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Subheading, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
-import {handleUpdateArticles, handleUpdatePageNumber} from "../../DashboardScreen/handlers/articles"
+import {handleResetArticles, handleResetPageNumber} from "../../DashboardScreen/handlers/articles"
 
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
@@ -18,12 +18,11 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
     const [viewContent, setViewContent] = useState("");
     const [ref, setRef] = useState(null);
     
-    const callRefreshControl = () => {
-        handleUpdateArticles("",dispatch); // reset list of articles in redux store
-        handleUpdatePageNumber(0,dispatch); // reset page number
-        fetchNextPage();   //fetch page 0
-        }
-    
+    const refresh = () => {        
+        handleResetArticles(dispatch);           // reset articles in store
+        handleResetPageNumber(dispatch); // reset page number
+      }
+      
     const Item = ({ title, subtitle, abstract, id, content, media }) => (
             <Card onPress={()=>{viewContent==id?setViewContent(""):setViewContent(id)}} style={styles.card}>
                 <Card.Title title={title} subtitle={subtitle} ></Card.Title>
@@ -65,7 +64,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
             <FlatList
                 refreshControl={
                     <RefreshControl
-                    onRefresh={()=>{callRefreshControl()}}
+                    onRefresh={()=>{refresh()}}
                     />
                 }
                 showsVerticalScrollIndicator={false}
