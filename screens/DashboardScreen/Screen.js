@@ -24,7 +24,7 @@ export default function DashboardScreen({navigation}) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => { // load data only once on mount
+  useEffect(() => { // load data on mount and refresh
     fetchNextPage(); 
   }, [refresh]);
 
@@ -34,12 +34,6 @@ export default function DashboardScreen({navigation}) {
     handleResetArticles(dispatch);           // reset articles in store
     navigation.navigate("LoginScreen"); // navigate to Login Screen
   }
-    //   return () => {
-  //     handleUpdateArticles("",dispatch); // reset list of articles in redux store
-  //     handleUpdatePageNumber(0,dispatch); // reset page number
-  //     fetchNextPage();   //fetch page 0
-  //   }
-  // }, [refresh]); // when the refresh button is toggled the useEffect is activated
 
   const fetchNextPage = () => {
     setloading(true);

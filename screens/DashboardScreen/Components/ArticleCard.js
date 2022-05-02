@@ -13,11 +13,19 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
     const dispatch = useDispatch();
     const [viewContent, setViewContent] = useState("");
     const [ref, setRef] = useState(null);
-    
-    const refresh = () => {        
+    const [refresh, setRefresh] = useState(false);
+    useEffect(() => { // load data on mount and refresh
+        if (refresh){
+            fetchNextPage(); 
+            setRefresh(false);
+        }
+    }, [refresh]);
+
+    const refreshPressed = ()=>{
         handleResetArticles(dispatch);           // reset articles in store
         handleResetPageNumber(dispatch); // reset page number
-      }
+        setRefresh(true);
+      };
       
     const Item = ({ title, subtitle, abstract, id, content, media }) => (
             <Card onPress={()=>{viewContent==id?setViewContent(""):setViewContent(id)}} style={styles.card}>
@@ -60,7 +68,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
             <FlatList
                 refreshControl={
                     <RefreshControl
-                    onRefresh={()=>{refresh()}}
+                    onRefresh={()=>{refreshPressed()}}
                     />
                 }
                 showsVerticalScrollIndicator={false}
