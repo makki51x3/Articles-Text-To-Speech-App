@@ -15,6 +15,7 @@ export default function DashboardScreen({navigation}) {
   const [loading, setloading] = useState(false);
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [stopLoading, setStopLoading] = useState(false);
 
   // useSelector hook to get data from the redux store
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
@@ -24,16 +25,12 @@ export default function DashboardScreen({navigation}) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => { // load data on mount and refresh
-    fetchNextPage(); 
-  }, [refresh]);
-
   const logOut = () => {        
     handleUpdateAccessToken("",dispatch); // reset access token in redux store
     handleResetPageNumber(dispatch); // reset page number
     handleResetArticles(dispatch);           // reset articles in store
     navigation.navigate("LoginScreen"); // navigate to Login Screen
-  }
+  };
 
   const fetchNextPage = () => {
     setloading(true);
@@ -50,20 +47,33 @@ export default function DashboardScreen({navigation}) {
       // reset LoginFailed and Loading flags
       setloading(false);
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
-        handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
+        console.log(response);
+        console.log(response.data.response.docs.length);
+        if(response.data.response.docs.length){
+          handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
+        }
+        else{
+          setStopLoading(true);
+        }
       }
     },
     (error) => { // catch error and stop loading indicator
       setloading(false);
+      setStopLoading(true);
     });
   };
 
   const refreshPressed = ()=>{
     handleResetArticles(dispatch);           // reset articles in store
     handleResetPageNumber(dispatch); // reset page number
+    setStopLoading(false);
     setRefresh(!refresh);
   };
-  
+
+  useEffect(() => { // load data on mount and refresh
+    fetchNextPage(); 
+  }, [refresh]);
+
   return (
     <SafeAreaView style={{flex:1}}>
       <StatusBar hidden={false} /> 
@@ -96,6 +106,8 @@ export default function DashboardScreen({navigation}) {
               articlesList={searchBarVisible?filteredArticles:articles} 
               searchBarVisible={searchBarVisible} 
               loading={loading}
+              stopLoading={stopLoading}
+              setStopLoading={()=>{setStopLoading()}}
               fetchNextPage={()=>{fetchNextPage()}}>
             </Cards>
             {loading?

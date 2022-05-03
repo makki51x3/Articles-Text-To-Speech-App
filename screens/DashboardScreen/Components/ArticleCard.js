@@ -8,12 +8,11 @@ import {handleResetArticles, handleResetPageNumber} from "../../DashboardScreen/
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
 
-export const  Cards = ({fetchNextPage, searchBarVisible, articlesList,loading}) => {
-    
+export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoading, setStopLoading, loading}) => {
     const dispatch = useDispatch();
     const [viewContent, setViewContent] = useState("");
-    const [ref, setRef] = useState(null);
     const [refresh, setRefresh] = useState(false);
+
     useEffect(() => { // load data on mount and refresh
         if (refresh){
             fetchNextPage(); 
@@ -24,15 +23,16 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList,loading}) 
     const refreshPressed = ()=>{
         handleResetArticles(dispatch);           // reset articles in store
         handleResetPageNumber(dispatch); // reset page number
+        setStopLoading(false);
         setRefresh(true);
       };
       
     const Item = ({ title, subtitle, abstract, id, content, media }) => (
             <Card onPress={()=>{viewContent==id?setViewContent(""):setViewContent(id)}} style={styles.card}>
-                <Card.Title title={title} subtitle={subtitle} ></Card.Title>
+                <Card.Title title={title} subtitle={subtitle}></Card.Title>
                 <Card.Content>
+                {media==""?null:<Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
                     <Paragraph >{abstract}</Paragraph> 
-                    {media==""?null:<Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
                     {viewContent==id?
                     <View style={styles.subheading}>
                         <Subheading>{content}</Subheading>
@@ -75,13 +75,10 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList,loading}) 
                 showsHorizontalScrollIndicator={false}
                 data={articlesList}
                 renderItem={renderItem}
-                keyExtractor={(article,index) => index}
-                ref={(ref) => {
-                    setRef(ref);
-                  }}
+                keyExtractor={(_,index) => index}
                 onEndReachedThreshold={0}
                 onEndReached={()=>{
-                    if(!searchBarVisible && !loading){
+                    if(!searchBarVisible && !stopLoading && !loading){
                         fetchNextPage();  
                     }
                 }}
