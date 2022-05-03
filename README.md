@@ -73,14 +73,18 @@ More information can be found here: https://docs.expo.dev/guides/sharing-preview
   ### *Link*
   exp.host/@51x3/interview_challenge?release-channel=default
   ### *QR Code*
-  ![image](https://user-images.githubusercontent.com/96151955/166200975-d22e8468-e178-4253-858c-ef17c6b1f59c.png)
+  ![image](https://user-images.githubusercontent.com/96151955/166203798-3e8e69a5-1e44-4191-9525-38b0c7baef2b.png)
 
 ## On Web
+
 More information can be found here: https://docs.expo.dev/get-started/installation/
 
 • Download and install Node.js LTS release from: https://nodejs.org/en/
+
 • Install expo-cli (in your command line or terminal, run: *npm install --global expo-cli* )
+
 • Clone this repository
+
 • Open command line or terminal and run in cloned directory and run: *expo start* or *npm start*
 
 # Coming Soon
