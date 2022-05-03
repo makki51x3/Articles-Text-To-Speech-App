@@ -1,4 +1,4 @@
-import {  StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground, Platform, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {  StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground, Platform, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
