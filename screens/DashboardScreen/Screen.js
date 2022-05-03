@@ -15,7 +15,6 @@ export default function DashboardScreen({navigation}) {
   const [loading, setloading] = useState(false);
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const [moreArticlesAvailable, setMoreArticlesAvailable] = useState(true);
 
   // useSelector hook to get data from the redux store
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
@@ -37,9 +36,7 @@ export default function DashboardScreen({navigation}) {
   }
 
   const fetchNextPage = () => {
-    if(moreArticlesAvailable){
-      setloading(true);
-    }
+    setloading(true);
     // Setup required http headers
     const config = { 
       headers: {
@@ -53,13 +50,7 @@ export default function DashboardScreen({navigation}) {
       // reset LoginFailed and Loading flags
       setloading(false);
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
-        if(response.data.response.docs.length!=0){
-          handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
-          setMoreArticlesAvailable(true);
-        }
-        else{
-          setMoreArticlesAvailable(false);
-        }
+        handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
       }
     },
     (error) => { // catch error and stop loading indicator
