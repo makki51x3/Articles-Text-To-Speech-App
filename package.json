@@ -24,7 +24,8 @@
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
     "react-redux": "^8.0.1",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "expo-navigation-bar": "~1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

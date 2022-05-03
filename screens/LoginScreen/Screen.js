@@ -1,6 +1,6 @@
 import { Dimensions, SafeAreaView, ActivityIndicator, StyleSheet, TextInput, View, TouchableOpacity, Text, ImageBackground } from 'react-native';
 import background from '../../assets/background.png' // relative path to image 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { handleUpdateUserName, handleUpdatePassword, handleUpdateAccessToken } from '../DashboardScreen/handlers/authentication';
