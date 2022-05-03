@@ -8,7 +8,7 @@ import {handleResetArticles, handleResetPageNumber} from "../../DashboardScreen/
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
 
-export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
+export const  Cards = ({fetchNextPage, searchBarVisible, articlesList,loading}) => {
     
     const dispatch = useDispatch();
     const [viewContent, setViewContent] = useState("");
@@ -81,13 +81,8 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList}) => {
                   }}
                 onEndReachedThreshold={0}
                 onEndReached={()=>{
-                    if(!searchBarVisible){
-                    ref.scrollToIndex({
-                        animated: true,
-                        index: 0,
-                        viewPosition: 1
-                      });
-                      fetchNextPage(); 
+                    if(!searchBarVisible && !loading){
+                        fetchNextPage();  
                     }
                 }}
             />

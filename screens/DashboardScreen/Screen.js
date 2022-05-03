@@ -95,6 +95,7 @@ export default function DashboardScreen({navigation}) {
             <Cards 
               articlesList={searchBarVisible?filteredArticles:articles} 
               searchBarVisible={searchBarVisible} 
+              loading={loading}
               fetchNextPage={()=>{fetchNextPage()}}>
             </Cards>
             {loading?
