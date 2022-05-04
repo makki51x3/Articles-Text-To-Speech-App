@@ -8,6 +8,7 @@ import {handleUpdateAccessToken} from "./handlers/authentication"
 import {handleUpdateArticles, handleResetArticles, handleUpdateFilteredArticles, handleResetPageNumber} from "../DashboardScreen/handlers/articles"
 import {Cards} from './Components/ArticleCard';
 import { Ionicons } from '@expo/vector-icons';
+import * as Speech from 'expo-speech';
 
 export default function DashboardScreen({navigation}) {
 
@@ -29,6 +30,7 @@ export default function DashboardScreen({navigation}) {
     handleUpdateAccessToken("",dispatch); // reset access token in redux store
     handleResetPageNumber(dispatch); // reset page number
     handleResetArticles(dispatch);           // reset articles in store
+    Speech.stop();  // stop speech if in play
     navigation.navigate("LoginScreen"); // navigate to Login Screen
   };
 
@@ -47,8 +49,6 @@ export default function DashboardScreen({navigation}) {
       // reset LoginFailed and Loading flags
       setloading(false);
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
-        console.log(response);
-        console.log(response.data.response.docs.length);
         if(response.data.response.docs.length){
           handleUpdateArticles(response.data.response.docs,articles,dispatch); // save articles response in redux store
         }
@@ -67,8 +67,14 @@ export default function DashboardScreen({navigation}) {
     handleResetArticles(dispatch);           // reset articles in store
     handleResetPageNumber(dispatch); // reset page number
     setStopLoading(false);
+    Speech.stop();  // stop speech if in play
     setRefresh(!refresh);
   };
+
+  const handleSearch = ()=>{
+    Speech.stop();  // stop speech if in play
+    setSearchBarVisible(!searchBarVisible);
+  }
 
   useEffect(() => { // load data on mount and refresh
     fetchNextPage(); 
@@ -99,7 +105,7 @@ export default function DashboardScreen({navigation}) {
                 <Ionicons name="reload" size={20} color="white"/>
               </TouchableOpacity>:null
               }
-              <Appbar.Action icon="magnify" onPress={()=>{setSearchBarVisible(!searchBarVisible)}} />
+              <Appbar.Action icon="magnify" onPress={()=>{handleSearch()}} />
           </Appbar.Header>
           <View style={styles.containerOpacity}>
             <Cards 

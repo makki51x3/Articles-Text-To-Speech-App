@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions, SafeAreaView, Text, View, RefreshControl, Image, Platform, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch } from "react-redux";
-import { Subheading, Card, TextInput, Paragraph } from 'react-native-paper';
+import { Subheading, Card, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import {handleResetArticles, handleResetPageNumber} from "../../DashboardScreen/handlers/articles"
 import { Ionicons } from '@expo/vector-icons'; 
@@ -26,6 +26,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
     const refreshPressed = ()=>{
         handleResetArticles(dispatch);           // reset articles in store
         handleResetPageNumber(dispatch); // reset page number
+        Speech.stop();  // stop speech if in play
         setStopLoading(false);
         setRefresh(true);
       };
