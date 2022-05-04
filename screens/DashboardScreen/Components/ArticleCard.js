@@ -72,7 +72,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
                         <View style={{margin:5}}>
                             <TouchableOpacity style={{justifyContent:"flex-end",flexDirection:"row"}} onPress={()=>{handleSpeechPressed(thingToSay,id)}}>
                                 <Ionicons name={speechIcon} size={20} color="black" />
-                                <Text> Play Audio</Text>
+                                <Text> {speechIcon=="play-circle-outline"?"Play":"Stop"} Audio</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.subheading}>
