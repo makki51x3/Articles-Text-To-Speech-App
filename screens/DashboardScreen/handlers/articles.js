@@ -1,9 +1,13 @@
 import {updateArticles, resetArticles, updateFilteredArticles, incrementPageNumber, resetPageNumber} from '../../../redux/feature/articlesSlice'
+import { useSelector } from "react-redux";
 
-export const handleUpdateArticles = (batch,dispatch) => {        
+
+export const handleUpdateArticles = (batch,articleIDs,dispatch) => {        
     if (batch){ // check that batch is not an empty list
     batch.forEach(element => {
-    dispatch(updateArticles(element));
+        if(!articleIDs.filter(obj => obj["_id"]==element["_id"]).length){ // check if element is already added
+            dispatch(updateArticles(element));
+        }
     });
     dispatch(incrementPageNumber());
     }

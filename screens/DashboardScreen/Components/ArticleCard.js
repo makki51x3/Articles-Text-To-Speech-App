@@ -1,9 +1,11 @@
 import React from 'react';
-import { Dimensions, SafeAreaView, View, RefreshControl, Image, Platform, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
-import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Subheading, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Dimensions, SafeAreaView, Text, View, RefreshControl, Image, Platform, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { useDispatch } from "react-redux";
+import { Subheading, Card, TextInput, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import {handleResetArticles, handleResetPageNumber} from "../../DashboardScreen/handlers/articles"
+import { Ionicons } from '@expo/vector-icons'; 
+import * as Speech from 'expo-speech';
 
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
@@ -11,7 +13,8 @@ const ScreenWidth = Dimensions.get("window").width;
 export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoading, setStopLoading, loading}) => {
     const dispatch = useDispatch();
     const [viewContent, setViewContent] = useState("");
-    const [refresh, setRefresh] = useState(false);
+    const [refresh, setRefresh] = useState(false);    
+    const [speechIcon, setSpeechIcon] = useState("play-circle-outline");
 
     useEffect(() => { // load data on mount and refresh
         if (refresh){
@@ -26,16 +29,54 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
         setStopLoading(false);
         setRefresh(true);
       };
+
+    const handleSpeechPressed = (thingToSay,id)=>{
+        Speech.isSpeakingAsync().then(
+            (speaking)=>{
+                if(speaking && viewContent==id){
+                    Speech.stop();
+                }
+                else{
+                    Speech.speak(
+                        thingToSay,
+                        {
+                            onStart:()=>{setSpeechIcon("stop-circle-outline")},
+                            onStopped:()=>{setSpeechIcon("play-circle-outline")},
+                            onDone:()=>{setSpeechIcon("play-circle-outline")},
+                            onError:()=>{setSpeechIcon("play-circle-outline")},
+                        }
+                        );
+                }
+            }
+        );
+    }
       
-    const Item = ({ title, subtitle, abstract, id, content, media }) => (
-            <Card onPress={()=>{viewContent==id?setViewContent(""):setViewContent(id)}} style={styles.card}>
-                <Card.Title title={title} subtitle={subtitle}></Card.Title>
+    const handleViewContent = (id)=>{
+        if(viewContent!=""){ // if a view is opened close it and stop speech
+            setViewContent("");
+            Speech.stop();
+        }
+        else{  // else, view what was pressed
+            setViewContent(id);
+        }
+    }
+    const Item = ({ title, subtitle, abstract, id, content, media, thingToSay }) => (
+            <Card onPress={()=>{handleViewContent(id)}} style={styles.card}>
+                <Card.Title title={title} subtitle={subtitle} titleNumberOfLines={2}></Card.Title>
                 <Card.Content>
-                {media==""?null:<Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
+                    {media==""?null:<Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
                     <Paragraph >{abstract}</Paragraph> 
                     {viewContent==id?
-                    <View style={styles.subheading}>
-                        <Subheading>{content}</Subheading>
+                    <View>
+                        <View style={{margin:5}}>
+                            <TouchableOpacity style={{justifyContent:"flex-end",flexDirection:"row"}} onPress={()=>{handleSpeechPressed(thingToSay,id)}}>
+                                <Ionicons name={speechIcon} size={20} color="black" />
+                                <Text> Play Audio</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.subheading}>
+                            <Subheading>{content}</Subheading>
+                        </View>
                     </View>:<></>}
                 </Card.Content>
             </Card>
@@ -46,6 +87,15 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
     const renderItem = ({ item,index }) => (
         <Item 
         id = {item["_id"]}
+        thingToSay = {
+            articlesList[index]["headline"]["main"]
+            +", "+
+            (articlesList[index]["byline"]["original"]==null?"":articlesList[index]["byline"]["original"])
+            +", "+
+            articlesList[index]["abstract"]
+            +", "+
+            articlesList[index]["lead_paragraph"]
+        }
         title={articlesList[index]["headline"]["main"]}
         subtitle={
             (timeToRead(articlesList[index]["word_count"])==0?"1":timeToRead(articlesList[index]["word_count"]))

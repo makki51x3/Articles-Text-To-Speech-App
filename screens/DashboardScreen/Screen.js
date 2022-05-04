@@ -50,7 +50,7 @@ export default function DashboardScreen({navigation}) {
         console.log(response);
         console.log(response.data.response.docs.length);
         if(response.data.response.docs.length){
-          handleUpdateArticles(response.data.response.docs,dispatch); // save articles response in redux store
+          handleUpdateArticles(response.data.response.docs,articles,dispatch); // save articles response in redux store
         }
         else{
           setStopLoading(true);
