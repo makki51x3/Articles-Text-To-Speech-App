@@ -43,7 +43,7 @@ I used stylesheet, expo vector icons and react-native-paper libraries to help me
 
 # Architecture and Libraries 
 
-The project makes use of different libraries like redux js tools for state management, react navigation for routing, axios for http methods,  react native paper for UI design, etc. The code makes use of functional programming, Hooks, redux for state management, proper file structure, and components best practices,etc.  
+The project makes use of different libraries like redux js tools for state management, react navigation for routing, axios for http methods,  react native paper for UI design, expo speech for text to speech conversion,  etc. The code makes use of functional programming, Hooks, redux for state management, proper file structure, and components best practices,etc.  
 
 # Build Tools
 
