@@ -82,6 +82,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
                 </Card.Content>
             </Card>
         );
+        
 
     // every 130 words is about 1 minute of speech according to what I googled. ..
     const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()};     
