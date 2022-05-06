@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
 import axios from "axios";
 import { Appbar } from 'react-native-paper';
-import {handleUpdateAccessToken} from "./handlers/authentication" 
+import {updateAccessToken} from "../../redux/slices/authenticationSlice" 
 import {handleUpdateArticles, handleResetArticles, handleUpdateFilteredArticles, handleResetPageNumber} from "../DashboardScreen/handlers/articles"
 import {Cards} from './Components/ArticleCard';
 import { Ionicons } from '@expo/vector-icons';
@@ -27,7 +27,7 @@ export default function DashboardScreen({navigation}) {
   const dispatch = useDispatch();
 
   const logOut = () => {        
-    handleUpdateAccessToken("",dispatch); // reset access token in redux store
+    dispatch(updateAccessToken("")); // reset access token in redux store
     handleResetPageNumber(dispatch); // reset page number
     handleResetArticles(dispatch);           // reset articles in store
     Speech.stop();  // stop speech if in play
