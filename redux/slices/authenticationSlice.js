@@ -3,11 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
   const initialState = {
     credentials:{user:"", pass:""},
     accessToken: "",
-    state:{
-      loading:false,
-      loginFailed: false,
-      passwordVisible:false
-    }
   };
 
   export const authenticationSlice = createSlice({
@@ -23,24 +18,12 @@ import { createSlice } from "@reduxjs/toolkit";
       updateAccessToken: (state, action) => {
         state.accessToken=action.payload;
       },
-      updateLoading:(state, action) => {
-        state.state.loading=action.payload;
-      },
-      updateLoginFailed:(state, action) => {
-        state.state.loginFailed=action.payload;
-      },
-      updatePasswordVisible:(state, action) => {
-        state.state.passwordVisible=action.payload;
-      },
     },
   });
   
   export const { 
     updateUserName, 
     updatePassword,
-    updateAccessToken, 
-    updateLoading, 
-    updateLoginFailed, 
-    updatePasswordVisible } = authenticationSlice.actions;
+    updateAccessToken} = authenticationSlice.actions;
   
   export default authenticationSlice.reducer;

@@ -1,6 +1,6 @@
 import axios from "axios";
-import {updateAccessToken, updateLoading, updateLoginFailed } from "../../../redux/feature/authenticationSlice"
-
+import {updateAccessToken } from "../../../redux/slices/authenticationSlice"
+import {updateLoading, updateLoginFailed} from "../../../redux/slices/loginPageSlice"
 
 export const handleLogin = ({navigation,dispatch,userName,password}) => {
 

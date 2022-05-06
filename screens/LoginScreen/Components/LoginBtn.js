@@ -7,8 +7,8 @@ export const LoginBtn = ({navigation})=>{
     const dispatch = useDispatch();
 
     // Get data from the redux store
-    const loginFailed = useSelector((state) => state.authenticationReducer.state.loginFailed);
-    const loading = useSelector((state) => state.authenticationReducer.state.loading);
+    const loginFailed = useSelector((state) => state.loginPageReducer.loginFailed);
+    const loading = useSelector((state) => state.loginPageReducer.loading);
     const userName = useSelector((state) => state.authenticationReducer.credentials.user);
     const password = useSelector((state) => state.authenticationReducer.credentials.pass);
 
@@ -20,7 +20,7 @@ export const LoginBtn = ({navigation})=>{
                 :<></>
             }
 
-            <View style={{flexDirection:"row",justifyContent: "space-around"}}>
+            <View style={{flexDirection:"row",justifyContent: "center"}}>
                 <TouchableOpacity
                     // disable button if loading or user name and password are empty
                     disabled={userName=="" || password=="" || loading}

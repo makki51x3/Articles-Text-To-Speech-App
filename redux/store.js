@@ -1,9 +1,10 @@
 import { configureStore} from "@reduxjs/toolkit";
-import authenticationReducer from "./feature/authenticationSlice";
-import articlesReducer from "./feature/articlesSlice";
+import authenticationReducer from "./slices/authenticationSlice";
+import articlesReducer from "./slices/articlesSlice";
+import loginPageReducer from "./slices/loginPageSlice";
 
 export const store = configureStore({
-    reducer:{authenticationReducer,articlesReducer},
+    reducer:{authenticationReducer,articlesReducer,loginPageReducer},
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     //     immutableCheck: false,
     //     serializableCheck: false,

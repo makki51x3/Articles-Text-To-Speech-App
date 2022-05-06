@@ -2,13 +2,14 @@ import { SafeAreaView, StyleSheet, View, ImageBackground } from 'react-native';
 import background from '../../assets/background.png' // relative path to image 
 import { useSelector, useDispatch } from "react-redux";
 import { TextInput } from 'react-native-paper';
-import {updateUserName, updatePassword, updatePasswordVisible} from "../../redux/feature/authenticationSlice"
+import {updateUserName, updatePassword} from "../../redux/slices/authenticationSlice"
 import {LoginBtn} from "./Components/LoginBtn"
+import {updatePasswordVisible} from "../../redux/slices/loginPageSlice"
 
 export default function LoginScreen({navigation}) {
 
   const dispatch = useDispatch();
-  const passwordVisible =  useSelector((state) => state.authenticationReducer.state.passwordVisible);
+  const passwordVisible =  useSelector((state) => state.loginPageReducer.passwordVisible);
 
   return (
     <SafeAreaView style={{flex:1}}>
