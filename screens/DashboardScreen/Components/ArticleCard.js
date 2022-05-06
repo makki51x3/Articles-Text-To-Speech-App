@@ -3,7 +3,7 @@ import { Dimensions, SafeAreaView, Text, View, RefreshControl, Image, Platform, 
 import { useDispatch } from "react-redux";
 import { Subheading, Card, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
-import {handleResetArticles, handleResetPageNumber} from "../../DashboardScreen/handlers/articles"
+import {resetArticles, resetPageNumber} from "../../../redux/slices/articlesSlice"
 import { Ionicons } from '@expo/vector-icons'; 
 import * as Speech from 'expo-speech';
 
@@ -24,8 +24,8 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
     }, [refresh]);
 
     const refreshPressed = ()=>{
-        handleResetArticles(dispatch);           // reset articles in store
-        handleResetPageNumber(dispatch); // reset page number
+        dispatch(resetArticles());           // reset articles in store
+        dispatch(resetPageNumber()); // reset page number
         Speech.stop();  // stop speech if in play
         setStopLoading(false);
         setRefresh(true);

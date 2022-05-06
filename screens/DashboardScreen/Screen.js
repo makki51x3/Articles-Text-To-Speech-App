@@ -1,24 +1,26 @@
 import {  StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground, Platform, View, TouchableOpacity, TextInput } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
 import axios from "axios";
 import { Appbar } from 'react-native-paper';
-import {updateAccessToken} from "../../redux/slices/authenticationSlice" 
-import {handleUpdateArticles, handleResetArticles, handleUpdateFilteredArticles, handleResetPageNumber} from "../DashboardScreen/handlers/articles"
 import {Cards} from './Components/ArticleCard';
 import { Ionicons } from '@expo/vector-icons';
-import * as Speech from 'expo-speech';
+import {updateFilteredArticles} from "../../redux/slices/articlesSlice"
+import {updateLoading,updateStopFetching} from "../../redux/slices/dashBoardPageSlice"
+import {handleLogOut} from "./handlers/handleLogOut"
+import {handleRefreshPressed} from "./handlers/handleRefreshPressed"
+import {handleUpdateArticles} from "./handlers/handleUpdateArticles"
+import {handleSearch} from "./handlers/handleSearch"
+
 
 export default function DashboardScreen({navigation}) {
 
-  // useState Hooks for UI interactions
-  const [loading, setloading] = useState(false);
-  const [searchBarVisible, setSearchBarVisible] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const [stopLoading, setStopLoading] = useState(false);
-
   // useSelector hook to get data from the redux store
+  const loading = useSelector((state) => state.dashBoardPageReducer.loading);
+  const searchBarVisible = useSelector((state) => state.dashBoardPageReducer.searchBarVisible);
+  const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
+  const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
   const filteredArticles = useSelector((state) => state.articlesReducer.filteredArticles);
@@ -26,16 +28,8 @@ export default function DashboardScreen({navigation}) {
 
   const dispatch = useDispatch();
 
-  const logOut = () => {        
-    dispatch(updateAccessToken("")); // reset access token in redux store
-    handleResetPageNumber(dispatch); // reset page number
-    handleResetArticles(dispatch);           // reset articles in store
-    Speech.stop();  // stop speech if in play
-    navigation.navigate("LoginScreen"); // navigate to Login Screen
-  };
-
   const fetchNextPage = () => {
-    setloading(true);
+    dispatch(updateLoading(true));
     // Setup required http headers
     const config = { 
       headers: {
@@ -47,34 +41,22 @@ export default function DashboardScreen({navigation}) {
     axios.get("http://34.245.213.76:3000" + "/articles?page="+pageNumber, config)
     .then((response) => { 
       // reset LoginFailed and Loading flags
-      setloading(false);
       if (response.status >= 200 && response.status <= 299){ //check for successful status code
         if(response.data.response.docs.length){
           handleUpdateArticles(response.data.response.docs,articles,dispatch); // save articles response in redux store
         }
         else{
-          setStopLoading(true);
+          dispatch(updateStopFetching(true));
         }
       }
     },
     (error) => { // catch error and stop loading indicator
-      setloading(false);
-      setStopLoading(true);
+      dispatch(updateLoading(false));
+      dispatch(updateStopFetching(true));
     });
   };
 
-  const refreshPressed = ()=>{
-    handleResetArticles(dispatch);           // reset articles in store
-    handleResetPageNumber(dispatch); // reset page number
-    setStopLoading(false);
-    Speech.stop();  // stop speech if in play
-    setRefresh(!refresh);
-  };
 
-  const handleSearch = ()=>{
-    Speech.stop();  // stop speech if in play
-    setSearchBarVisible(!searchBarVisible);
-  }
 
   useEffect(() => { // load data on mount and refresh
     fetchNextPage(); 
@@ -86,13 +68,13 @@ export default function DashboardScreen({navigation}) {
       <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
         <View style={styles.AppContainer}> 
           <Appbar.Header style={styles.AppBarHeader}>
-            <Appbar.BackAction onPress={()=>{logOut()}} />
+            <Appbar.BackAction onPress={()=>{handleLogOut({navigation,dispatch})}} />
               {
               searchBarVisible?
                 <View style={{width:"70%"}}>
                   <TextInput 
                   onChangeText={(filter) => {     
-                    handleUpdateFilteredArticles(filter, articles, dispatch);
+                    dispatch(updateFilteredArticles({filter:filter,currentList:articles}));
                   }} 
                   placeholder="Search articles"
                   style={styles.searchInput} 
@@ -101,21 +83,21 @@ export default function DashboardScreen({navigation}) {
               }
               {
               (Platform.OS!="android" && Platform.OS!="ios")?
-              <TouchableOpacity onPress={()=>{refreshPressed()}}>
+              <TouchableOpacity onPress={()=>{handleRefreshPressed({dispatch,refresh})}}>
                 <Ionicons name="reload" size={20} color="white"/>
               </TouchableOpacity>:null
               }
-              <Appbar.Action icon="magnify" onPress={()=>{handleSearch()}} />
+              <Appbar.Action icon="magnify" onPress={()=>{handleSearch({dispatch,searchBarVisible})}} />
           </Appbar.Header>
           <View style={styles.containerOpacity}>
-            <Cards 
+            {/* <Cards 
               articlesList={searchBarVisible?filteredArticles:articles} 
               searchBarVisible={searchBarVisible} 
               loading={loading}
               stopLoading={stopLoading}
-              setStopLoading={()=>{setStopLoading()}}
+              setStopLoading={()=>{updateStopFetching()}}
               fetchNextPage={()=>{fetchNextPage()}}>
-            </Cards>
+            </Cards> */}
             {loading?
             <View style={{height:45}}>
               <ActivityIndicator size="large" color="white" />
