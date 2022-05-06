@@ -25,7 +25,7 @@ export const LoginBtn = ({navigation})=>{
                     // disable button if loading or user name and password are empty
                     disabled={userName=="" || password=="" || loading}
                     style={styles.btn}
-                    onPress={()=>{handleLogin({navigation,dispatch,userName,password})}}
+                    onPress={()=>{handleLogin(navigation,dispatch,userName,password)}}
                     underlayColor='#fff'>
                     <Text style={styles.text}>Login</Text>
                 </TouchableOpacity>

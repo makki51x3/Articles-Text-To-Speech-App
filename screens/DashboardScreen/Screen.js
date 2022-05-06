@@ -2,16 +2,14 @@ import {  StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
-import axios from "axios";
 import { Appbar } from 'react-native-paper';
 import {Cards} from './Components/ArticleCard';
 import { Ionicons } from '@expo/vector-icons';
 import {updateFilteredArticles} from "../../redux/slices/articlesSlice"
-import {updateLoading,updateStopFetching} from "../../redux/slices/dashBoardPageSlice"
 import {handleLogOut} from "./handlers/handleLogOut"
 import {handleRefreshPressed} from "./handlers/handleRefreshPressed"
-import {handleUpdateArticles} from "./handlers/handleUpdateArticles"
 import {handleSearch} from "./handlers/handleSearch"
+import {fetchNextPage} from "./handlers/fetchNextPage"
 
 
 export default function DashboardScreen({navigation}) {
@@ -28,38 +26,8 @@ export default function DashboardScreen({navigation}) {
 
   const dispatch = useDispatch();
 
-  const fetchNextPage = () => {
-    dispatch(updateLoading(true));
-    // Setup required http headers
-    const config = { 
-      headers: {
-      'accept': 'application/json', 
-      "Authorization": "Bearer " + accessToken
-      }
-    };
-    // Initiate a post request with username and password to Login API
-    axios.get("http://34.245.213.76:3000" + "/articles?page="+pageNumber, config)
-    .then((response) => { 
-      // reset LoginFailed and Loading flags
-      if (response.status >= 200 && response.status <= 299){ //check for successful status code
-        if(response.data.response.docs.length){
-          handleUpdateArticles(response.data.response.docs,articles,dispatch); // save articles response in redux store
-        }
-        else{
-          dispatch(updateStopFetching(true));
-        }
-      }
-    },
-    (error) => { // catch error and stop loading indicator
-      dispatch(updateLoading(false));
-      dispatch(updateStopFetching(true));
-    });
-  };
-
-
-
   useEffect(() => { // load data on mount and refresh
-    fetchNextPage(); 
+    fetchNextPage(dispatch,pageNumber,articles,accessToken); 
   }, [refresh]);
 
   return (
@@ -68,7 +36,7 @@ export default function DashboardScreen({navigation}) {
       <ImageBackground source= {background}  resizeMode="cover" style={styles.container}>
         <View style={styles.AppContainer}> 
           <Appbar.Header style={styles.AppBarHeader}>
-            <Appbar.BackAction onPress={()=>{handleLogOut({navigation,dispatch})}} />
+            <Appbar.BackAction onPress={()=>{handleLogOut(navigation,dispatch)}} />
               {
               searchBarVisible?
                 <View style={{width:"70%"}}>
@@ -83,11 +51,11 @@ export default function DashboardScreen({navigation}) {
               }
               {
               (Platform.OS!="android" && Platform.OS!="ios")?
-              <TouchableOpacity onPress={()=>{handleRefreshPressed({dispatch,refresh})}}>
+              <TouchableOpacity onPress={()=>{handleRefreshPressed(dispatch,refresh)}}>
                 <Ionicons name="reload" size={20} color="white"/>
               </TouchableOpacity>:null
               }
-              <Appbar.Action icon="magnify" onPress={()=>{handleSearch({dispatch,searchBarVisible})}} />
+              <Appbar.Action icon="magnify" onPress={()=>{handleSearch(dispatch,searchBarVisible)}} />
           </Appbar.Header>
           <View style={styles.containerOpacity}>
             {/* <Cards 

@@ -2,7 +2,7 @@ import axios from "axios";
 import {updateAccessToken } from "../../../redux/slices/authenticationSlice"
 import {updateLoading, updateLoginFailed} from "../../../redux/slices/loginPageSlice"
 
-export const handleLogin = ({navigation,dispatch,userName,password}) => {
+export const handleLogin = (navigation,dispatch,userName,password) => {
 
   // Setup required http headers
   const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}

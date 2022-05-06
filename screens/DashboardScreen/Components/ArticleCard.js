@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, SafeAreaView, Text, View, RefreshControl, Image, Platform, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, View, RefreshControl, Image, Platform, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch } from "react-redux";
 import { Subheading, Card, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
@@ -7,8 +7,6 @@ import {resetArticles, resetPageNumber} from "../../../redux/slices/articlesSlic
 import { Ionicons } from '@expo/vector-icons'; 
 import * as Speech from 'expo-speech';
 
-const ScreenHeight = Dimensions.get("window").height;
-const ScreenWidth = Dimensions.get("window").width;
 
 export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoading, setStopLoading, loading}) => {
     const dispatch = useDispatch();
@@ -142,8 +140,8 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
 
 const styles = StyleSheet.create({
     image: {
-        height: (Platform.OS == "ios"|| Platform.OS =="android")?ScreenHeight*0.3:ScreenHeight*0.4, 
-        width: (Platform.OS == "ios"|| Platform.OS =="android")?ScreenWidth*0.9:ScreenWidth*0.5, 
+        height: (Platform.OS == "ios"|| Platform.OS =="android")?"30%":"40%", 
+        width: (Platform.OS == "ios"|| Platform.OS =="android")?"90%":"50%", 
         margin: 3, 
         resizeMode:"contain",
         borderRadius:7,
