@@ -1,4 +1,4 @@
-import {updateAccessToken, updatePassword, updateUserName} from '../../../redux/feature/authenticationSlice'
+import {updateAccessToken, updatePassword, updateUserName} from '../../../redux/slices/authenticationSlice'
 
   export const handleUpdateAccessToken = (tkn,dispatch) => {
     if (!(typeof tkn === 'string')) return console.log("token should be a string!");   // check if token is a string

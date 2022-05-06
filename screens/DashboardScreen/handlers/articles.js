@@ -1,4 +1,4 @@
-import {updateArticles, resetArticles, updateFilteredArticles, incrementPageNumber, resetPageNumber} from '../../../redux/feature/articlesSlice'
+import {updateArticles, resetArticles, updateFilteredArticles, incrementPageNumber, resetPageNumber} from '../../../redux/slices/articlesSlice'
 
 export const handleUpdateArticles = (batch,articleIDs,dispatch) => {        
     if (batch){ // check that batch is not an empty list
