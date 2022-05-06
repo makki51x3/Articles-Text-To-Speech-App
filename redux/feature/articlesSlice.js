@@ -13,13 +13,13 @@ import { createSlice } from "@reduxjs/toolkit";
       updateArticles: (state, action) => {
         state.articles.push(action.payload);
       },
-      resetArticles: (state, action) => {
+      resetArticles: (state) => {
         state.articles= [];
       },
-      resetPageNumber: (state,action)=>{
+      resetPageNumber: (state)=>{
         state.currentPageNumber=0;
       },
-      incrementPageNumber: (state,action)=>{
+      incrementPageNumber: (state)=>{
         state.currentPageNumber=state.currentPageNumber+1;
       },
       updateFilteredArticles: (state, action) => {
