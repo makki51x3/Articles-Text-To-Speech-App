@@ -5,8 +5,8 @@ import {updateRefresh, updateStopFetching} from '../../../redux/slices/dashBoard
 export const handleRefreshPressed = (dispatch,refresh)=>{
     dispatch(resetArticles()); // reset articles in store
     dispatch(resetPageNumber()); // reset page number
-    dispatch(updateStopFetching(true));
     Speech.stop();  // stop speech if in play
+    dispatch(updateStopFetching(false));
     dispatch(updateRefresh(!refresh));
 };
 

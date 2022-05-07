@@ -1,23 +1,29 @@
 import React from 'react';
 import { SafeAreaView, Text, View, RefreshControl, Image, Platform, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { useDispatch } from "react-redux";
 import { Subheading, Card, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import {resetArticles, resetPageNumber} from "../../../redux/slices/articlesSlice"
 import { Ionicons } from '@expo/vector-icons'; 
 import * as Speech from 'expo-speech';
 
+import { useSelector, useDispatch } from "react-redux";
+import {handleRefreshPressed} from "../handlers/handleRefreshPressed"
 
-export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoading, setStopLoading, loading}) => {
+
+export const  Cards = (fetchNextPage, searchBarVisible, articlesList, loading) => {
     const dispatch = useDispatch();
     const [viewContent, setViewContent] = useState("");
-    const [refresh, setRefresh] = useState(false);    
+    // const [refresh, setRefresh] = useState(false);    
     const [speechIcon, setSpeechIcon] = useState("play-circle-outline");
+
+    ///////////////////////////////////////////////////////////////////
+    const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
+    const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
+    ///////////////////////////////////////////////////////////////////
 
     useEffect(() => { // load data on mount and refresh
         if (refresh){
             fetchNextPage(); 
-            setRefresh(false);
         }
     }, [refresh]);
 
@@ -118,7 +124,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
             <FlatList
                 refreshControl={
                     <RefreshControl
-                    onRefresh={()=>{refreshPressed()}}
+                    onRefresh={()=>{handleRefreshPressed(dispatch,refresh)}}
                     />
                 }
                 showsVerticalScrollIndicator={false}
@@ -128,7 +134,7 @@ export const  Cards = ({fetchNextPage, searchBarVisible, articlesList, stopLoadi
                 keyExtractor={(_,index) => index}
                 onEndReachedThreshold={0}
                 onEndReached={()=>{
-                    if(!searchBarVisible && !stopLoading && !loading){
+                    if(!searchBarVisible && !stopFetching && !loading){
                         fetchNextPage();  
                     }
                 }}

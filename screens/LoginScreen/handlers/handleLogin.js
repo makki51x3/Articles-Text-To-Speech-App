@@ -1,5 +1,5 @@
 import axios from "axios";
-import {updateAccessToken } from "../../../redux/slices/authenticationSlice"
+import {updateAccessToken, updateWarningText } from "../../../redux/slices/authenticationSlice"
 import {updateLoading, updateLoginFailed} from "../../../redux/slices/loginPageSlice"
 
 export const handleLogin = (navigation,dispatch,userName,password) => {
@@ -26,6 +26,12 @@ export const handleLogin = (navigation,dispatch,userName,password) => {
     }
   },
   (error) => { // stop loading, display login failed, and reset placeholders
+    if(error.response.status==401){  // upon authorization error
+      dispatch(updateWarningText("Invalid username or password!"));
+    }
+    else{ // for other errors such as timeout, invalid connection, etc.
+      dispatch(updateWarningText("An error occured while connecting!"));
+    }
     dispatch(updateLoading(false));
     dispatch(updateLoginFailed(true));
   });

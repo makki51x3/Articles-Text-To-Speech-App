@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
   const initialState = {
     credentials:{user:"", pass:""},
     accessToken: "",
+    warningText: "Invalid username or password!"
   };
 
   export const authenticationSlice = createSlice({
@@ -18,12 +19,16 @@ import { createSlice } from "@reduxjs/toolkit";
       updateAccessToken: (state, action) => {
         state.accessToken=action.payload;
       },
+      updateWarningText: (state, action) => {
+        state.warningText=action.payload;
+      },
     },
   });
   
   export const { 
     updateUserName, 
     updatePassword,
-    updateAccessToken} = authenticationSlice.actions;
+    updateAccessToken,
+    updateWarningText } = authenticationSlice.actions;
   
   export default authenticationSlice.reducer;

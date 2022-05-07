@@ -11,12 +11,13 @@ export const LoginBtn = ({navigation})=>{
     const loading = useSelector((state) => state.loginPageReducer.loading);
     const userName = useSelector((state) => state.authenticationReducer.credentials.user);
     const password = useSelector((state) => state.authenticationReducer.credentials.pass);
+    const warningText = useSelector((state) => state.authenticationReducer.warningText);
 
     return (
         <View>
             {  // upon failed login display warning text
                 loginFailed?
-                <Text style={styles.warning}> Invalid username or password!</Text>
+                <Text style={styles.warning}>{warningText}</Text>
                 :<></>
             }
 

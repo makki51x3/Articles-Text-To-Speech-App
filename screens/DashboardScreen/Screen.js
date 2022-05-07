@@ -4,13 +4,13 @@ import { useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
 import { Appbar } from 'react-native-paper';
 import {Cards} from './Components/ArticleCard';
-import { Ionicons } from '@expo/vector-icons';
 import {updateFilteredArticles} from "../../redux/slices/articlesSlice"
 import {handleLogOut} from "./handlers/handleLogOut"
-import {handleRefreshPressed} from "./handlers/handleRefreshPressed"
 import {handleSearch} from "./handlers/handleSearch"
 import {fetchNextPage} from "./handlers/fetchNextPage"
-
+import {SearchInput} from "./Components/SearchInput"
+import { updateRefresh } from '../../redux/slices/dashBoardPageSlice';
+import {RefreshBtn} from "./Components/RefreshBtn"
 
 export default function DashboardScreen({navigation}) {
 
@@ -18,7 +18,6 @@ export default function DashboardScreen({navigation}) {
   const loading = useSelector((state) => state.dashBoardPageReducer.loading);
   const searchBarVisible = useSelector((state) => state.dashBoardPageReducer.searchBarVisible);
   const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
-  const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
   const filteredArticles = useSelector((state) => state.articlesReducer.filteredArticles);
@@ -26,8 +25,15 @@ export default function DashboardScreen({navigation}) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => { // load data on mount and refresh
-    fetchNextPage(dispatch,pageNumber,articles,accessToken); 
+  useEffect(() => { // load data on mount 
+      fetchNextPage(dispatch,pageNumber,articles,accessToken); 
+  }, []);
+
+  useEffect(() => { // load data on refresh
+    if(refresh){
+      fetchNextPage(dispatch,pageNumber,articles,accessToken); 
+      dispatch(updateRefresh(false));
+    }
   }, [refresh]);
 
   return (
@@ -37,24 +43,8 @@ export default function DashboardScreen({navigation}) {
         <View style={styles.AppContainer}> 
           <Appbar.Header style={styles.AppBarHeader}>
             <Appbar.BackAction onPress={()=>{handleLogOut(navigation,dispatch)}} />
-              {
-              searchBarVisible?
-                <View style={{width:"70%"}}>
-                  <TextInput 
-                  onChangeText={(filter) => {     
-                    dispatch(updateFilteredArticles({filter:filter,currentList:articles}));
-                  }} 
-                  placeholder="Search articles"
-                  style={styles.searchInput} 
-                  />
-                </View>:<Appbar.Content></Appbar.Content>
-              }
-              {
-              (Platform.OS!="android" && Platform.OS!="ios")?
-              <TouchableOpacity onPress={()=>{handleRefreshPressed(dispatch,refresh)}}>
-                <Ionicons name="reload" size={20} color="white"/>
-              </TouchableOpacity>:null
-              }
+              <SearchInput/>
+              <RefreshBtn/>
               <Appbar.Action icon="magnify" onPress={()=>{handleSearch(dispatch,searchBarVisible)}} />
           </Appbar.Header>
           <View style={styles.containerOpacity}>
