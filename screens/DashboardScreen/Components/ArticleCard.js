@@ -8,32 +8,23 @@ import * as Speech from 'expo-speech';
 
 import { useSelector, useDispatch } from "react-redux";
 import {handleRefreshPressed} from "../handlers/handleRefreshPressed"
+import {fetchNextPage} from "../handlers/fetchNextPage"
 
 
-export const  Cards = (fetchNextPage, searchBarVisible, articlesList, loading) => {
+export const  Cards = () => {
     const dispatch = useDispatch();
     const [viewContent, setViewContent] = useState("");
-    // const [refresh, setRefresh] = useState(false);    
     const [speechIcon, setSpeechIcon] = useState("play-circle-outline");
+    
+    const searchBarVisible = useSelector((state) => state.dashBoardPageReducer.searchBarVisible);
+    const loading = useSelector((state) => state.dashBoardPageReducer.loading);
 
-    ///////////////////////////////////////////////////////////////////
+    const filteredArticles = useSelector((state) => state.articlesReducer.filteredArticles);
+    const articles = useSelector((state) => state.articlesReducer.articles);
+    const articlesList=searchBarVisible?filteredArticles:articles;
     const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
-    const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
-    ///////////////////////////////////////////////////////////////////
-
-    useEffect(() => { // load data on mount and refresh
-        if (refresh){
-            fetchNextPage(); 
-        }
-    }, [refresh]);
-
-    const refreshPressed = ()=>{
-        dispatch(resetArticles());           // reset articles in store
-        dispatch(resetPageNumber()); // reset page number
-        Speech.stop();  // stop speech if in play
-        setStopLoading(false);
-        setRefresh(true);
-      };
+    const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
+    const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
 
     const handleSpeechPressed = (thingToSay,id)=>{
         Speech.isSpeakingAsync().then(
@@ -86,7 +77,6 @@ export const  Cards = (fetchNextPage, searchBarVisible, articlesList, loading) =
                 </Card.Content>
             </Card>
         );
-        
 
     // every 130 words is about 1 minute of speech according to what I googled. ..
     const timeToRead = (wordCount)=>{return Math.floor(wordCount/130).toString()};     
@@ -115,6 +105,7 @@ export const  Cards = (fetchNextPage, searchBarVisible, articlesList, loading) =
         media={(articlesList[index]["multimedia"]).length!=0?articlesList[index]["multimedia"][0]["url"]:""}
         />
     );    
+
     if (articlesList.length==0){
         return (<></>);
       }
@@ -135,7 +126,7 @@ export const  Cards = (fetchNextPage, searchBarVisible, articlesList, loading) =
                 onEndReachedThreshold={0}
                 onEndReached={()=>{
                     if(!searchBarVisible && !stopFetching && !loading){
-                        fetchNextPage();  
+                        fetchNextPage(dispatch,pageNumber,articles,accessToken);  
                     }
                 }}
             />

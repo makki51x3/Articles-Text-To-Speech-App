@@ -20,12 +20,12 @@ export const fetchNextPage = (dispatch,pageNumber,articles,accessToken) => {
     .then((response) => { 
         if (response.status >= 200 && response.status <= 299){ //check for successful status code
             if(response.data.response.docs.length){ // check that docs is not empty in response
-                console.log(response.data.response.docs);
                 handleUpdateArticles(response.data.response.docs,articles,dispatch); // save articles response in redux store
             }
             else{
                 dispatch(updateStopFetching(true)); // if docs is empty stop fetching more data unless refreshed
             }
+            dispatch(updateLoading(false));
         }
     },
     (error) => { // on error, stop loading indicator and stop fetching more data unless refreshed

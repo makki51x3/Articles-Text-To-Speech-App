@@ -48,14 +48,7 @@ export default function DashboardScreen({navigation}) {
               <Appbar.Action icon="magnify" onPress={()=>{handleSearch(dispatch,searchBarVisible)}} />
           </Appbar.Header>
           <View style={styles.containerOpacity}>
-            {/* <Cards 
-              articlesList={searchBarVisible?filteredArticles:articles} 
-              searchBarVisible={searchBarVisible} 
-              loading={loading}
-              stopLoading={stopLoading}
-              setStopLoading={()=>{updateStopFetching()}}
-              fetchNextPage={()=>{fetchNextPage()}}>
-            </Cards> */}
+            <Cards></Cards>   
             {loading?
             <View style={{height:45}}>
               <ActivityIndicator size="large" color="white" />
