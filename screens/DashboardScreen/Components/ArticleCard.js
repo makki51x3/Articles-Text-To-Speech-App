@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, View, RefreshControl, Image, Platform, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, SafeAreaView, Text, View, RefreshControl, Image, Platform, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Subheading, Card, Paragraph } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import {resetArticles, resetPageNumber} from "../../../redux/slices/articlesSlice"
@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 import {handleRefreshPressed} from "../handlers/handleRefreshPressed"
 import {fetchNextPage} from "../handlers/fetchNextPage"
 
+const ScreenHeight = Dimensions.get("window").height;
+const ScreenWidth = Dimensions.get("window").width;
 
 export const  Cards = () => {
     const dispatch = useDispatch();
@@ -137,8 +139,8 @@ export const  Cards = () => {
 
 const styles = StyleSheet.create({
     image: {
-        height: (Platform.OS == "ios"|| Platform.OS =="android")?"30%":"40%", 
-        width: (Platform.OS == "ios"|| Platform.OS =="android")?"90%":"50%", 
+        height: ScreenHeight*0.3, 
+        width: (Platform.OS == "ios"|| Platform.OS =="android")?ScreenWidth*0.9:ScreenWidth*0.4, 
         margin: 3, 
         resizeMode:"contain",
         borderRadius:7,
@@ -150,6 +152,7 @@ const styles = StyleSheet.create({
         padding:10
     },
     card:{
+        flex:1,
         marginVertical:10,
         marginHorizontal:15,
         borderRadius:15,
