@@ -11,11 +11,12 @@ export const handleLogin = (navigation,dispatch,userName,password) => {
   dispatch(updateLoading(true));
   
   // Initiate a post request with username and password to Login API
-  axios.post("http://34.245.213.76:3000" + "/auth/signin", {
-    "username":userName,
-    "password":password
-  },config)
-  .then((response) => { 
+  axios.post(
+    "http://34.245.213.76:3000" + "/auth/signin", 
+    {"username":userName, "password":password},
+    config,)
+  .then(
+    (response) => { 
     // reset LoginFailed and Loading flags
     dispatch(updateLoginFailed(false));
     dispatch(updateLoading(false));
@@ -24,17 +25,18 @@ export const handleLogin = (navigation,dispatch,userName,password) => {
       dispatch(updateAccessToken(response.data.accessToken));
       navigation.navigate("DashboardScreen"); // navigate to dashboard
     }
-  },
-  (error) => { // stop loading, display login failed, and reset placeholders
-    if(error.response.status==401){  // upon authorization error
-      dispatch(updateWarningText("Invalid username or password!"));
+    },
+    (error) => { // stop loading, display login failed, and reset placeholders
+      if(error.response.status==401){  // upon authorization error
+        dispatch(updateWarningText("Invalid username or password!"));
+      }
+      else{ // for other errors such as timeout, invalid connection, etc.
+        dispatch(updateWarningText("An error occured while connecting!"));
+      }
+      dispatch(updateLoading(false));
+      dispatch(updateLoginFailed(true));
     }
-    else{ // for other errors such as timeout, invalid connection, etc.
-      dispatch(updateWarningText("An error occured while connecting!"));
-    }
-    dispatch(updateLoading(false));
-    dispatch(updateLoginFailed(true));
-  });
+  );
 };
 
 export default handleLogin;

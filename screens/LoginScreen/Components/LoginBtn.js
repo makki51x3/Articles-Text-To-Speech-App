@@ -16,9 +16,7 @@ export const LoginBtn = ({navigation})=>{
     return (
         <View>
             {  // upon failed login display warning text
-                loginFailed?
-                <Text style={styles.warning}>{warningText}</Text>
-                :<></>
+              loginFailed && <Text style={styles.warning}>{warningText}</Text>
             }
 
             <View style={{flexDirection:"row",justifyContent: "center"}}>
@@ -26,19 +24,18 @@ export const LoginBtn = ({navigation})=>{
                     // disable button if loading or user name and password are empty
                     disabled={userName=="" || password=="" || loading}
                     style={styles.btn}
-                    onPress={()=>{handleLogin(navigation,dispatch,userName,password)}}
+                    onPress={()=>{ handleLogin( navigation, dispatch, userName, password )}}
                     underlayColor='#fff'>
                     <Text style={styles.text}>Login</Text>
                 </TouchableOpacity>
 
                 {  // display spinner while loading
-                    loading?
+                    loading &&
                     <ActivityIndicator 
                     size="small" 
                     color="white" 
                     style={styles.spinner} 
                     />
-                    :<></>
                 }
             </View>
         </View>
