@@ -107,14 +107,14 @@ More information can be found here: https://docs.expo.dev/guides/sharing-preview
 
 • Download Expo Go App from Apple store or Play store ( search expo )
 
-• Create an account if you don't have one and sign in
+• Create an account if you don't have one and sign in (optional)
 
 • Access the application using:
   ### *Link*
   https://exp.host/@51x3/interview_challenge?release-channel=default
   ### *QR Code*
-  ![image](https://user-images.githubusercontent.com/96151955/166843004-06edb4d5-de44-4490-b069-e6de20c6547c.png)
-  
+  ![image](https://user-images.githubusercontent.com/96151955/167315765-d024072e-d2d2-4699-adad-19d94c02d5fa.png)
+
 ## On Web
 
 More information can be found here: https://docs.expo.dev/get-started/installation/
@@ -125,21 +125,21 @@ More information can be found here: https://docs.expo.dev/get-started/installati
 
 • Clone this repository
 
-• Open command line or terminal and run in cloned directory: *expo start* or *npm start*
+• Open command line or terminal and run in cloned directory: *expo start* or *npm start* 
 
 # Coming Soon
 
 • Unit tests on different interactions between the user or API and the application. 
 
-• Adding a splash screen
+• Adding a splash screen { for mobile only (IOS and Android) }
 
-• Adding an app icon
+• Adding an app icon { for mobile only (IOS and Android) }
 
 • The use of Docker container to deploy the application on the cloud
 
-• Adding an advanced search option
+• Adding an advanced search option ( Sort Ascending/Descending alphabetical order, sort according time to read, choose where to search text e.g. in abstract, title, body, etc. )
 
-• Adding an advanced speech option
+• Adding an advanced speech option ( switch between male or female voice, control the speech's speed, etc. )
 
 # Prototype (IOS/Web/Android)
 
