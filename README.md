@@ -94,6 +94,8 @@ More information can be found here: https://docs.expo.dev/get-started/installati
 
 • Adding a splash screen
 
+• Adding an app icon
+
 • The use of Docker container to deploy the application on the cloud
 
 • Adding an advanced search option
