@@ -92,15 +92,13 @@ More information can be found here: https://docs.expo.dev/get-started/installati
 
 • Unit tests on different interactions between the user or API and the application. 
 
-• Code refactoring
-
 • Adding a splash screen
-
-• Better code commentary 
 
 • The use of Docker container to deploy the application on the cloud
 
-• Better file structure and architecture tweaks 
+• Adding an advanced search option
+
+• Adding an advanced speech option
 
 # Prototype (IOS/Web/Android)
 
