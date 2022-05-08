@@ -13,7 +13,9 @@ https://user-images.githubusercontent.com/96151955/166845139-92d370ae-52cd-4fc4-
 
 • UI/UX Design
 
-• Architecture and Libraries
+• Libraries
+
+• Architecture
 
 • Build Tools
 
@@ -41,9 +43,37 @@ The application consists of two screens: Login & Dashboard. Upon starting the ap
 
 I used stylesheet, expo vector icons and react-native-paper libraries to help me design and implement a simple, user-friendly, and eye-appealing user interface. I also used Platform, StatusBar, and other components to make the UI responsive and compatible to different platforms such as android, iphone and web. The color theme I chose is blue with two different space background images and some variance in the opacity to achieve translucency. I added a responsive search bar instead of having it fixed on the screen. 
 
-# Architecture and Libraries 
+# Libraries 
 
-The project makes use of different libraries like redux js tools for state management, react navigation for routing, axios for http methods,  react native paper for UI design, expo speech for text to speech conversion,  etc. The code makes use of functional programming, Hooks, redux for state management, proper file structure, and components best practices,etc.  
+The project makes use of different libraries like redux js tools for state management, react navigation for routing, axios for http methods,  react native paper for UI design, expo speech for text to speech conversion,  etc. The code makes use of functional programming, Hooks, redux for state management, proper file structure, and components best practices,etc.
+
+# Architecture
+
+The code follows the following file structure:
+
+- redux
+
+  - store
+
+  - slices
+
+- screens
+  
+  - DashBoardScreen
+  
+    - Components
+    
+    - handlers
+    
+    - Screen
+  
+  - LoginScreen
+    
+    - Components
+    
+    - handlers
+    
+    - Screen
 
 # Build Tools
 
