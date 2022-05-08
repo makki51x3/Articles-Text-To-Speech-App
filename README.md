@@ -129,7 +129,9 @@ More information can be found here: https://docs.expo.dev/get-started/installati
 
 # Coming Soon
 
-• Unit tests on different interactions between the user or API and the application. 
+• Adding Unit tests for different interactions between the user or API and the application.
+
+• Adding the Unit tests to Github Actions for automated testing upon each commit. 
 
 • Adding a splash screen { for mobile only (IOS and Android) }
 
