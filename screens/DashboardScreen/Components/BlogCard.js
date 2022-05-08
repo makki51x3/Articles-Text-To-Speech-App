@@ -1,12 +1,10 @@
 
 import React from 'react';
-import { Dimensions, Text, View,Image, Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, View,Image, Platform, StyleSheet } from 'react-native';
 import { Subheading, Card, Paragraph } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons'; 
-import {handleSpeechPressed} from "../handlers/handleSpeechPressed"
 import {handleViewContent} from "../handlers/handleViewContent"
-
-
+import {AudioControl} from "../Components/AudioControl"
+import { useSelector, useDispatch } from "react-redux";
 
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
@@ -14,33 +12,32 @@ const ScreenWidth = Dimensions.get("window").width;
 // every 130 words is about 1 minute of speech according to what I googled. ..
 const timeToRead = (wordCount)=>{return Math.floor(wordCount/130)};   
 
-const BlogCard = ({ dispatch, viewContent, title, subtitle, abstract, id, content, media, thingToSay, speechIcon }) => (
-    <Card onPress={()=>{handleViewContent(dispatch,id,viewContent)}} style={styles.card}>
-        <Card.Title title={title} subtitle={subtitle} titleNumberOfLines={2}></Card.Title>
-        <Card.Content>
-            {media!="" && <Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
-            <Paragraph >{abstract}</Paragraph> 
-            {
-            viewContent==id &&
-                <View>
-                    <TouchableOpacity style={{margin:5,justifyContent:"flex-end",flexDirection:"row"}} onPress={()=>{handleSpeechPressed(dispatch,thingToSay,id,viewContent)}}>
-                        <Ionicons name={speechIcon} size={20} color="black" />
-                        <Text> {speechIcon=="play-circle-outline"?"Play":"Stop"} Audio</Text>
-                    </TouchableOpacity>
-                    <View style={styles.subheading}>
-                        <Subheading>{content}</Subheading>
+const BlogCard = ({ title, subtitle, abstract, id, content, media, thingToSay }) => {
+    const dispatch = useDispatch();
+    const viewContent = useSelector((state) => state.cardReducer.viewContent);
+    
+    return (
+        <Card onPress={()=>{handleViewContent(dispatch,id,viewContent)}} style={styles.card}>
+            <Card.Title title={title} subtitle={subtitle} titleNumberOfLines={2}></Card.Title>
+            <Card.Content>
+                {media!="" && <Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
+                <Paragraph >{abstract}</Paragraph> 
+                {
+                viewContent==id &&
+                    <View>
+                        <AudioControl thingToSay={thingToSay} id={id} />
+                        <View style={styles.subheading}>
+                            <Subheading>{content}</Subheading>
+                        </View>
                     </View>
-                </View>
-            }
-        </Card.Content>
-    </Card>
-);  
+                }
+            </Card.Content>
+        </Card>
+    );  
+}
 
-export const renderBlogCard = (item,viewContent,dispatch,speechIcon) => (
+export const renderBlogCard = (item) => (
     <BlogCard 
-        speechIcon={speechIcon}
-        dispatch = {dispatch}
-        viewContent = {viewContent}
         id = {item["_id"]}
         thingToSay = {
             item["headline"]["main"]
@@ -65,7 +62,7 @@ export const renderBlogCard = (item,viewContent,dispatch,speechIcon) => (
     />
 );    
 
-    const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     image: {
         height: ScreenHeight*0.3, 
         width: (Platform.OS == "ios"|| Platform.OS =="android")?ScreenWidth*0.9:ScreenWidth*0.4, 
@@ -85,17 +82,6 @@ export const renderBlogCard = (item,viewContent,dispatch,speechIcon) => (
         marginHorizontal:15,
         borderRadius:15,
         backgroundColor:"rgb(200,200,200)"
-    },
-    container: {
-        flex: 1,
-    },
-    item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        margin: 15,
-    },
-    title: {
-        fontSize: 32,
     },
 });
 

@@ -2,9 +2,13 @@ import { TextInput } from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import {updatePasswordVisible} from "../../../redux/slices/loginPageSlice"
 import { updatePassword } from "../../../redux/slices/authenticationSlice"
+import { useSelector, useDispatch } from "react-redux";
 
 
-export const PasswordInputField = ({dispatch,passwordVisible})=>{
+export const PasswordInputField = ()=>{
+    const dispatch = useDispatch();
+    const passwordVisible =  useSelector((state) => state.loginPageReducer.passwordVisible);
+  
     return(
         <TextInput
             onChangeText={(pass) => {dispatch(updatePassword(pass));}}

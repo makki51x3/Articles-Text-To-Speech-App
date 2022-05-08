@@ -2,8 +2,10 @@
 import {StyleSheet} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import {updateUserName} from "../../../redux/slices/authenticationSlice"
-
-export const UserInputField = ({dispatch})=>{
+import { useDispatch } from "react-redux";
+    
+export const UserInputField = ()=>{
+    const dispatch = useDispatch();
     return(
         <TextInput
             hidePlaceholder={true} 
