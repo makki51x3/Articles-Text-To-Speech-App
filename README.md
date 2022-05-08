@@ -17,6 +17,10 @@ https://user-images.githubusercontent.com/96151955/166845139-92d370ae-52cd-4fc4-
 
 • Architecture
 
+  • Files and Directories
+  
+  • Redux Store 
+
 • Build Tools
 
 • Documentation
@@ -49,7 +53,7 @@ The project makes use of different libraries like redux js tools for state manag
 
 # Architecture
 
-The code follows the following file structure:
+## Files and Directories
 
 - redux
 
@@ -74,6 +78,11 @@ The code follows the following file structure:
     - handlers
     
     - Screen
+
+## Redux Store
+
+![image](https://user-images.githubusercontent.com/96151955/167315475-7f0c990c-0213-4f42-8ef6-e122f923c54b.png)
+
 
 # Build Tools
 
