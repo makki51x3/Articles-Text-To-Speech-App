@@ -1,7 +1,7 @@
 import * as Speech from 'expo-speech';
 import {updateSpeechIcon} from "../../../redux/slices/cardSlice"
 
-export const handleSpeechPressed = (dispatch,thingToSay,id,viewContent,speechSpeed)=>{
+export const handleSpeechPressed = (dispatch,thingToSay,id,viewContent,speechSpeed,speaker)=>{
     Speech.isSpeakingAsync().then(
         (speaking)=>{
             if(speaking && viewContent==id){
@@ -13,7 +13,7 @@ export const handleSpeechPressed = (dispatch,thingToSay,id,viewContent,speechSpe
                         thingToSay,
                         {
                             rate:speechSpeed,
-                            // voice:speaker,
+                            voice:speaker,
                             onStart:()=>{dispatch(updateSpeechIcon("stop-circle-outline"))},
                             onStopped:()=>{dispatch(updateSpeechIcon("play-circle-outline"))},
                             onDone:()=>{dispatch(updateSpeechIcon("play-circle-outline"))},
@@ -26,7 +26,7 @@ export const handleSpeechPressed = (dispatch,thingToSay,id,viewContent,speechSpe
                         thingToSay.slice(0,Speech.maxSpeechInputLength),
                         {
                             rate:speechSpeed,
-                            // voice:speaker,
+                            voice:speaker,
                             onStart:()=>{dispatch(updateSpeechIcon("stop-circle-outline"))},
                             onStopped:()=>{dispatch(updateSpeechIcon("play-circle-outline"))},
                             onDone:()=>{dispatch(updateSpeechIcon("play-circle-outline"))},

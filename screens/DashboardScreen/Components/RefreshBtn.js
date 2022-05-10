@@ -21,9 +21,6 @@ export const RefreshBtn = ()=>{
     }else{
         return <></>;
     }
-    else{
-        return <></>;
-    }
 }
 
 export default RefreshBtn;

@@ -23,7 +23,7 @@ import { createSlice } from "@reduxjs/toolkit";
                     state.speechSpeed= 0.5;
                 }
                 else{
-                    state.speechSpeed= action.payload+0.5; // increment speech speed by x0.5
+                    state.speechSpeed= action.payload+0.25; // increment speech speed by x0.5
                 }
             },
             updateSelectedVoice: (state, action) => {

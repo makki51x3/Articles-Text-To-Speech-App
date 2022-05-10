@@ -1,29 +1,33 @@
 import { useSelector, useDispatch } from "react-redux";
 import {React} from 'react';
-import { Dimensions, Platform,Text, View, StyleSheet, TouchableOpacity, Picker } from 'react-native';
+import { Platform, Dimensions, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import {handleSpeechPressed} from "../handlers/handleSpeechPressed";
 import {updateSpeechSpeed, updateSelectedVoice} from "../../../redux/slices/cardSlice";
 import * as Speech from 'expo-speech';
+import {VoicesList} from "../Components/VoicesList";
+import {Picker} from "@react-native-picker/picker";
 
 const ScreenHeight = Dimensions.get("window").height;
 
 export const AudioControl = ({thingToSay,id})=> {
+    
+    // Get data from the redux store
     const dispatch = useDispatch();
     const viewContent = useSelector((state) => state.cardReducer.viewContent);
     const speechIcon = useSelector((state) => state.cardReducer.speechIcon);
     const speechSpeed = useSelector((state) => state.cardReducer.speechSpeed);
-    // const selectedVoice = useSelector((state) => state.cardReducer.selectedVoice);
+    const selectedVoice = useSelector((state) => state.cardReducer.selectedVoice);
 
     return (
-        <View style={{flexDirection:"row", justifyContent:"flex-end" }}>
-            {/* <TouchableOpacity 
+        <View style={{flexDirection:"row", justifyContent:(Platform.OS=="ios"||Platform.OS=="android")?"flex-end":"space-between" }}>
+            {(Platform.OS=="ios"||Platform.OS=="android")?<></>:
+            <TouchableOpacity 
                 style={styles.speechBtn} 
                 onPress={()=>{}}
                 >
-                <Text>Choose Speaker: </Text>
+                <Text style={{fontSize:14,fontWeight:666}}>Choose Speaker: </Text>
                 <Picker
-                    style={{fontSize:14}}
                     selectedValue={selectedVoice}
                     onValueChange={
                         (speaker) => {
@@ -33,7 +37,8 @@ export const AudioControl = ({thingToSay,id})=> {
                     }>
                     <VoicesList/>
                 </Picker>
-            </TouchableOpacity>   */}
+            </TouchableOpacity> 
+            }        
             <View style={{ flexDirection:"row"}}>
                 <TouchableOpacity 
                     style={styles.speechBtn} 
@@ -47,7 +52,7 @@ export const AudioControl = ({thingToSay,id})=> {
                 <TouchableOpacity 
                     style={styles.speechBtn} 
                     onPress={()=>{
-                        handleSpeechPressed(dispatch,thingToSay,id,viewContent,speechSpeed);
+                        handleSpeechPressed(dispatch,thingToSay,id,viewContent,speechSpeed,selectedVoice);
                     }}
                     >
                     <Ionicons name={speechIcon} size={20} color="black" />

@@ -13,6 +13,8 @@ const ScreenWidth = Dimensions.get("window").width;
 const timeToRead = (wordCount)=>{return Math.floor(wordCount/130)};   
 
 const BlogCard = ({ title, subtitle, abstract, id, content, media, thingToSay }) => {
+    
+    // Get data from the redux store    
     const dispatch = useDispatch();
     const viewContent = useSelector((state) => state.cardReducer.viewContent);
     
