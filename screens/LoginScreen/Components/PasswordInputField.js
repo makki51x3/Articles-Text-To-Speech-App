@@ -11,7 +11,7 @@ export const PasswordInputField = ()=>{
   
     return(
         <TextInput
-            onChangeText={(pass) => {dispatch(updatePassword(pass));}}
+            onChangeText={(pass) => {dispatch(updatePassword(pass))}}
             placeholder={"Password"}
             secureTextEntry={!passwordVisible}
             style={styles.input}
