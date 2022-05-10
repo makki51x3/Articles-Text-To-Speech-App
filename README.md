@@ -113,7 +113,7 @@ More information can be found here: https://docs.expo.dev/guides/sharing-preview
   ### *Link*
   https://exp.host/@51x3/interview_challenge?release-channel=default
   ### *QR Code*
-  ![image](https://user-images.githubusercontent.com/96151955/167315765-d024072e-d2d2-4699-adad-19d94c02d5fa.png)
+  ![image](https://user-images.githubusercontent.com/96151955/167632701-ca02d7be-e545-4a56-90c4-6ea5a5a7163b.png)
 
 ## On Web
 
