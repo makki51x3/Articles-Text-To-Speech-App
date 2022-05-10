@@ -9,7 +9,7 @@ export const handleUpdateVoices = (dispatch) => {
                 speakers.forEach(element => {      
                         dispatch(updateAvailableVoices(element["identifier"]));
                 });
-                dispatch(updateSelectedVoice(speakers[14]["identifier"]));
+                dispatch(updateSelectedVoice(speakers[0]["identifier"]));
             }
         }
     );     

@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import {React} from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Platform,Text, View, StyleSheet, TouchableOpacity, Picker } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
-import {handleSpeechPressed} from "../handlers/handleSpeechPressed"
-import {updateSpeechSpeed} from "../../../redux/slices/cardSlice"
-
+import {handleSpeechPressed} from "../handlers/handleSpeechPressed";
+import {updateSpeechSpeed, updateSelectedVoice} from "../../../redux/slices/cardSlice";
+import { VoicesList } from "./VoicesList";
 import * as Speech from 'expo-speech';
 
 export const AudioControl = ({thingToSay,id})=> {
@@ -15,14 +15,23 @@ export const AudioControl = ({thingToSay,id})=> {
     const selectedVoice = useSelector((state) => state.cardReducer.selectedVoice);
 
     return (
-        <View style={{flexDirection:"row", justifyContent:"space-between"}}>
+        <View style={{flexDirection:(Platform.OS=="ios"||Platform.OS=="android")?"column":"row", justifyContent:"space-between"}}>
             <TouchableOpacity 
                 style={styles.speechBtn} 
-                onPress={()=>{
-                    Speech.stop();
-                }}
+                onPress={()=>{}}
                 >
-                <Text>Choose Speaker: {selectedVoice}</Text>
+                <Text>Choose Speaker: </Text>
+                <Picker
+                    style={{fontSize:14}}
+                    selectedValue={selectedVoice}
+                    onValueChange={
+                        (speaker) => {
+                            Speech.stop();
+                            dispatch(updateSelectedVoice(speaker));
+                        }
+                    }>
+                    <VoicesList/>
+                </Picker>
             </TouchableOpacity>  
             <View style={{ flexDirection:"row"}}>
                 <TouchableOpacity 

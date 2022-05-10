@@ -18,6 +18,8 @@ export const RefreshBtn = ()=>{
               <Ionicons name="reload" size={20} color="white"/>
             </TouchableOpacity>
         );
+    }else{
+        return null;
     }
 }
 
