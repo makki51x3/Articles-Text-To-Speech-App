@@ -81,8 +81,7 @@ The project makes use of different libraries like redux js tools for state manag
 
 ## Redux Store
 
-![image](https://user-images.githubusercontent.com/96151955/167315475-7f0c990c-0213-4f42-8ef6-e122f923c54b.png)
-
+![image](https://user-images.githubusercontent.com/96151955/167683111-9a3b00e6-3c03-4d25-86c7-8ee32d3e7fe7.png)
 
 # Build Tools
 
