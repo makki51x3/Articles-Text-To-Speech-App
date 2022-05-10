@@ -16,6 +16,7 @@ export const  CardList = () => {
     const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
     const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
     const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
+    const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
 
     if (articlesList.length){   
         return (
