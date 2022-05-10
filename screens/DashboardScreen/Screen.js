@@ -25,7 +25,7 @@ export default function DashboardScreen({navigation}) {
   const dispatch = useDispatch();
 
   useEffect(() => { // load data on mount 
-    if(Platform.OS=="ios"||Platform.OS=="android"){
+    if(Platform.OS!="ios"&&Platform.OS!="android"){
       handleUpdateVoices(dispatch)
     }
     fetchNextPage(dispatch,pageNumber,articles,accessToken); 
