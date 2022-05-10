@@ -34,7 +34,7 @@ export const  CardList = () => {
                    ({item})=> renderBlogCard(item)
                 }
                 keyExtractor={(item) => item["_id"]}                
-                onEndReachedThreshold={0}
+                onEndReachedThreshold={0.1}
                 onEndReached={
                     ()=>{
                         if(!searchBarVisible && !stopFetching && !loading){
@@ -47,7 +47,7 @@ export const  CardList = () => {
         );
     }
     else{
-        return null;
+        return <></>;
     }
 }
 
