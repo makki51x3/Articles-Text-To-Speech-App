@@ -1,4 +1,4 @@
-import {  StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground, Platform, View } from 'react-native';
+import { StatusBar, SafeAreaView, ActivityIndicator, StyleSheet,ImageBackground, Platform, View } from 'react-native';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import background from '../../assets/dashBoardBG.png' // relative path to image 
@@ -11,7 +11,6 @@ import {SearchInput} from "./Components/SearchInput"
 import { updateRefresh } from '../../redux/slices/dashBoardPageSlice';
 import {RefreshBtn} from "./Components/RefreshBtn"
 import {handleUpdateVoices} from "./handlers/handleUpdateVoices"
-import {updateSelectedVoice} from "../../redux/slices/cardSlice";
 
 export default function DashboardScreen({navigation}) {
 
@@ -26,8 +25,9 @@ export default function DashboardScreen({navigation}) {
   const dispatch = useDispatch();
 
   useEffect(() => { // load data on mount 
-    handleUpdateVoices(dispatch);
-    // dispatch(updateSelectedVoice(availableVoices[0]["identifier"]));
+    if(Platform.OS=="ios"||Platform.OS=="android"){
+      handleUpdateVoices(dispatch)
+    }
     fetchNextPage(dispatch,pageNumber,articles,accessToken); 
   }, []);
 
