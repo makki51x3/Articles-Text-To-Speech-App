@@ -81,8 +81,7 @@ The project makes use of different libraries like redux js tools for state manag
 
 ## Redux Store
 
-![image](https://user-images.githubusercontent.com/96151955/167315475-7f0c990c-0213-4f42-8ef6-e122f923c54b.png)
-
+![image](https://user-images.githubusercontent.com/96151955/167683111-9a3b00e6-3c03-4d25-86c7-8ee32d3e7fe7.png)
 
 # Build Tools
 
@@ -113,7 +112,8 @@ More information can be found here: https://docs.expo.dev/guides/sharing-preview
   ### *Link*
   https://exp.host/@51x3/interview_challenge?release-channel=default
   ### *QR Code*
-  ![image](https://user-images.githubusercontent.com/96151955/167635836-3817932c-c0ca-448b-b9c1-347c439996c3.png)
+  ![image](https://user-images.githubusercontent.com/96151955/167682359-586a245d-7182-48bd-8fec-75e98f9dc3c9.png)
+
 
 ## On Web
 
