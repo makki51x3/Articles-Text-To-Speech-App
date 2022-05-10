@@ -10,6 +10,7 @@ import {fetchNextPage} from "./handlers/fetchNextPage"
 import {SearchInput} from "./Components/SearchInput"
 import { updateRefresh } from '../../redux/slices/dashBoardPageSlice';
 import {RefreshBtn} from "./Components/RefreshBtn"
+import {handleUpdateVoices} from "./handlers/handleUpdateVoices"
 
 export default function DashboardScreen({navigation}) {
 
@@ -24,7 +25,8 @@ export default function DashboardScreen({navigation}) {
   const dispatch = useDispatch();
 
   useEffect(() => { // load data on mount 
-      fetchNextPage(dispatch,pageNumber,articles,accessToken); 
+    handleUpdateVoices(dispatch);
+    fetchNextPage(dispatch,pageNumber,articles,accessToken); 
   }, []);
 
   useEffect(() => { // load data on refresh
