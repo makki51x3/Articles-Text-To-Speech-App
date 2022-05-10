@@ -19,7 +19,7 @@ export const RefreshBtn = ()=>{
             </TouchableOpacity>
         );
     }else{
-        return null;
+        return <></>;
     }
 }
 

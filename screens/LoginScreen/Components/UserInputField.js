@@ -9,7 +9,7 @@ export const UserInputField = ()=>{
     return(
         <TextInput
             hidePlaceholder={true} 
-            onChangeText={(user) => {dispatch(updateUserName(user));}}
+            onChangeText={(user) => {dispatch(updateUserName(user))}}
             placeholder={"User Name"}
             style={styles.input}
         />

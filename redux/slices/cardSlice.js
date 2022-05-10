@@ -20,7 +20,7 @@ import { createSlice } from "@reduxjs/toolkit";
             },
             updateSpeechSpeed: (state, action) => {
                 if(action.payload==2){ // set speed to x0.5 once it reaches x2
-                    state.speechSpeed= 0;
+                    state.speechSpeed= 0.5;
                 }
                 else{
                     state.speechSpeed= action.payload+0.5; // increment speech speed by x0.5

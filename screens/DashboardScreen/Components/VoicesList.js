@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { Picker } from '@react-native-picker/picker';
 
 export const VoicesList = ()=>{
-
     // Get data from the redux store
     const availableVoices = useSelector((state) => state.cardReducer.availableVoices);
     let done = [];

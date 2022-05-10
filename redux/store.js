@@ -13,8 +13,8 @@ export const store = configureStore({
         dashBoardPageReducer,
         cardReducer
     },
-    // middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    //     immutableCheck: false,
-    //     serializableCheck: false,
-    //   }) // disable middleware warnings
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        immutableCheck: false,
+        serializableCheck: false,
+      }) // disable middleware warnings
 });
