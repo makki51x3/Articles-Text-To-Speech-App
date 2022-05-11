@@ -2,9 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
   
 const initialState = {
   searchBarVisible: false,
-  advancedSearchIcon: "caret-down-circle-outline",
-  filteredArticles: [],
-
+  advancedSearchVisible: false,
+  filteredArticles: []
 };
 
 export const searchSlice = createSlice({
@@ -14,8 +13,8 @@ export const searchSlice = createSlice({
     updateSearchBarVisible: (state, action) => {
         state.searchBarVisible=action.payload;
     },
-    updateAdvancedSearchIcon: (state, action) => {
-        state.advancedSearchIcon=action.payload;
+    updateAdvancedSearchVisible: (state, action) => {
+        state.advancedSearchVisible=action.payload;
     },
     updateFilteredArticles: (state, action) => {
         state.filteredArticles=[];
@@ -33,8 +32,7 @@ export const searchSlice = createSlice({
 
 export const { 
     updateSearchBarVisible,
-    updateAdvancedSearchIcon,
-    updateFilteredArticles, 
-} = searchSlice.actions;
+    updateAdvancedSearchVisible,
+    updateFilteredArticles} = searchSlice.actions;
 
 export default searchSlice.reducer;

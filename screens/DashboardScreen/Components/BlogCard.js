@@ -16,7 +16,7 @@ const BlogCard = ({ title, subtitle, abstract, id, content, media, thingToSay })
     
     // Get data from the redux store    
     const dispatch = useDispatch();
-    const viewContent = useSelector((state) => state.cardReducer.viewContent);
+    const viewContent = useSelector((state) => state.dashBoardPageReducer.viewContent);
     
     return (
         <Card onPress={()=>{handleViewContent(dispatch,id,viewContent)}} style={styles.card}>

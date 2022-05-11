@@ -1,5 +1,5 @@
 
-import {updateAvailableVoices} from '../../../redux/slices/cardSlice'
+import {updateAvailableVoices} from '../../../redux/slices/speechSlice'
 import * as Speech from 'expo-speech';
 
 export const handleUpdateVoices = (dispatch) => {  

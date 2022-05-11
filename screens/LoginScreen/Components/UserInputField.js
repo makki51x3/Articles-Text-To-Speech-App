@@ -5,7 +5,9 @@ import {updateUserName} from "../../../redux/slices/authenticationSlice"
 import { useDispatch } from "react-redux";
     
 export const UserInputField = ()=>{
+
     const dispatch = useDispatch();
+    
     return(
         <TextInput
             hidePlaceholder={true} 

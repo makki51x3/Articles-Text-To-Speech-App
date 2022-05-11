@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 export const PasswordInputField = ()=>{
+
+    // Get data from the redux store
     const dispatch = useDispatch();
     const passwordVisible =  useSelector((state) => state.loginPageReducer.passwordVisible);
   

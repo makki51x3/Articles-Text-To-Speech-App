@@ -7,16 +7,25 @@ import {renderBlogCard} from './BlogCard';
 
 export const  CardList = () => {
     
+    // Get data from the redux store
     const dispatch = useDispatch();
-    const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
+
+    // Dash Board Page Reducer
     const loading = useSelector((state) => state.dashBoardPageReducer.loading);
+    const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
+    const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
+
+    // Search Bar Reducer
+    const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
     const filteredArticles = useSelector((state) => state.searchReducer.filteredArticles);
+
+    // Articles Reducer
     const articles = useSelector((state) => state.articlesReducer.articles);
     const articlesList = searchBarVisible ? filteredArticles : articles;
-    const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
-    const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
     const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
-    const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
+
+    // Authentication Reducer
+    const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
 
     if (articlesList.length){   
         return (

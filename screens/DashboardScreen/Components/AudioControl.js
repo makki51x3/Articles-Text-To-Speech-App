@@ -3,7 +3,7 @@ import {React} from 'react';
 import { Platform, Dimensions, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import {handleSpeechPressed} from "../handlers/handleSpeechPressed";
-import {updateSpeechSpeed, updateSelectedVoice} from "../../../redux/slices/cardSlice";
+import {updateSpeechSpeed, updateSelectedVoice} from "../../../redux/slices/speechSlice";
 import * as Speech from 'expo-speech';
 import {VoicesList} from "../Components/VoicesList";
 import {Picker} from "@react-native-picker/picker";
@@ -14,10 +14,13 @@ export const AudioControl = ({thingToSay,id})=> {
     
     // Get data from the redux store
     const dispatch = useDispatch();
-    const viewContent = useSelector((state) => state.cardReducer.viewContent);
-    const speechIcon = useSelector((state) => state.cardReducer.speechIcon);
-    const speechSpeed = useSelector((state) => state.cardReducer.speechSpeed);
-    const selectedVoice = useSelector((state) => state.cardReducer.selectedVoice);
+    // Dash Board Page Reducer
+    const viewContent = useSelector((state) => state.dashBoardPageReducer.viewContent);
+
+    // Speech Reducer
+    const speechIcon = useSelector((state) => state.speechReducer.speechIcon);
+    const speechSpeed = useSelector((state) => state.speechReducer.speechSpeed);
+    const selectedVoice = useSelector((state) => state.speechReducer.selectedVoice);
 
     return (
         <View style={{flexDirection:"row", justifyContent:(Platform.OS=="ios"||Platform.OS=="android")?"flex-end":"space-between" }}>

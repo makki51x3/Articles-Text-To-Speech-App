@@ -4,10 +4,9 @@ import {handleRefreshPressed} from "../handlers/handleRefreshPressed"
 import { Ionicons } from '@expo/vector-icons';
 
 export const RefreshBtn = ()=>{
-
-    const dispatch = useDispatch();
-
+    
     // Get data from the redux store
+    const dispatch = useDispatch();
     const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
 
     if(Platform.OS!="android" && Platform.OS!="ios"){ // don't display on mobile

@@ -4,12 +4,16 @@ const initialState = {
   loading: false,
   refresh: false,
   stopFetching: false,
+  viewContent: "",
 };
 
 export const dashBoardPageSlice = createSlice({
   name: "dashBoardPage",
   initialState,
   reducers: {
+    updateViewContent: (state, action) => {
+      state.viewContent= action.payload;
+    },
     updateLoading: (state, action) => {
         state.loading=action.payload;
     },  
@@ -24,6 +28,7 @@ export const dashBoardPageSlice = createSlice({
 
 export const { 
     updateLoading, 
+    updateViewContent,
     updateRefresh,
     updateStopFetching} = dashBoardPageSlice.actions;
 

@@ -3,16 +3,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from "react-redux";
 import { Appbar } from 'react-native-paper';
 import {updateFilteredArticles} from "../../../redux/slices/searchSlice"
+import { handleAdvancedSearchPressed } from "../handlers/handleAdvancedSearchPressed";
 
 const ScreenHeight = Dimensions.get("window").height;
 
 export const SearchBar = ()=>{
 
+    // Get data from the redux store
     const dispatch = useDispatch();
 
-    // Get data from the redux store
+    // Search Reducer
     const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
     const advancedSearchIcon = useSelector((state) => state.searchReducer.advancedSearchIcon);
+    const advancedSearchVisible = useSelector((state) => state.searchReducer.advancedSearchVisible);
+
+    // Articles Reducer
     const articles = useSelector((state) => state.articlesReducer.articles);
 
     if(searchBarVisible){ 
@@ -27,9 +32,9 @@ export const SearchBar = ()=>{
                 />
                 <TouchableOpacity 
                 style={styles.btn} 
-                onPress={()=>{alert("do something.. .")}}
+                onPress={()=>{handleAdvancedSearchPressed(dispatch,advancedSearchVisible)}}
                 >
-                    <Ionicons name={advancedSearchIcon} size={24} color="white" />
+                    <Ionicons name={advancedSearchVisible?"caret-up-circle-outline":"caret-down-circle-outline"} size={24} color="white" />
                 </TouchableOpacity>
             </View>
         );

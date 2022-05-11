@@ -1,5 +1,5 @@
 import * as Speech from 'expo-speech';
-import {updateSpeechIcon} from "../../../redux/slices/cardSlice"
+import {updateSpeechIcon} from "../../../redux/slices/speechSlice"
 
 export const handleSpeechPressed = (dispatch,thingToSay,id,viewContent,speechSpeed,speaker)=>{
     Speech.isSpeakingAsync().then(

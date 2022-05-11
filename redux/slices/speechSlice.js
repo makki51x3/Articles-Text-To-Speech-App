@@ -3,20 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
     const initialState = {
         speechIcon: "play-circle-outline",
         speechSpeed: 1,
-        viewContent: "",
         availableVoices: [],
         selectedVoice:"",
     };
     
-    export const cardSlice = createSlice({
-        name: "card",
+    export const speechSlice = createSlice({
+        name: "speech",
         initialState,
         reducers: {
             updateSpeechIcon: (state, action) => {
                 state.speechIcon= action.payload;
-            },
-            updateViewContent: (state, action) => {
-                state.viewContent= action.payload;
             },
             updateSpeechSpeed: (state, action) => {
                 if(action.payload==2){ // set speed to x0.5 once it reaches x2
@@ -40,11 +36,9 @@ import { createSlice } from "@reduxjs/toolkit";
   
     export const { 
         updateSpeechIcon,
-        updateViewContent,
         updateSpeechSpeed,
-        updateSpeechSpeaker,
+        updateSelectedVoice,
         updateAvailableVoices,
-        resetAvailableVoices,
-        updateSelectedVoice} = cardSlice.actions;
+        resetAvailableVoices} = speechSlice.actions;
   
-  export default cardSlice.reducer;
+  export default speechSlice.reducer;

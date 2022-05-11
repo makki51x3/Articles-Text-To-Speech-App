@@ -1,5 +1,5 @@
 
-import {updateViewContent} from "../../../redux/slices/cardSlice"
+import {updateViewContent} from "../../../redux/slices/dashBoardPageSlice"
 import * as Speech from 'expo-speech';
 
 export const handleViewContent = (dispatch,id,viewContent)=>{
