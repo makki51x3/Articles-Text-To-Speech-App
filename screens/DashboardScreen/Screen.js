@@ -14,15 +14,24 @@ import {handleUpdateVoices} from "./handlers/handleUpdateVoices"
 
 export default function DashboardScreen({navigation}) {
 
-  // useSelector hook to get data from the redux store
+  // Get data from the redux store
+  const dispatch = useDispatch();
+
+  // Dash Board Page Reducer
   const loading = useSelector((state) => state.dashBoardPageReducer.loading);
-  const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
   const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
+
+  // Authentication Reducer
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
+
+  // Articles Reducer
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
   const articles = useSelector((state) => state.articlesReducer.articles);
 
-  const dispatch = useDispatch();
+  // Search Reducer
+  const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
+  const advancedSearchVisible = useSelector((state) => state.searchReducer.advancedSearchVisible);
+
 
   useEffect(() => { // load data on mount 
     if(Platform.OS!="ios"&&Platform.OS!="android"){
@@ -52,6 +61,20 @@ export default function DashboardScreen({navigation}) {
             <RefreshBtn />
             <Appbar.Action icon="magnify" onPress={()=>{handleSearchBtn(dispatch,searchBarVisible)}} />
           </Appbar.Header>
+            { advancedSearchVisible &&
+              <View style={{ 
+                backgroundColor:"#C8C8C8", 
+                height:50,
+                width:"auto", 
+                borderColor:"#1E1464", 
+                borderWidth:4,
+                borderTopWidth:7,
+                borderBottomLeftRadius:30,
+                borderBottomRightRadius:30,
+                }}>
+                  
+              </View>
+            }
           <View style={styles.containerOpacity}>
             <CardList/>
             {loading  &&
