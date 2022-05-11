@@ -7,7 +7,7 @@ import {CardList} from './Components/CardList';
 import {handleLogOut} from "./handlers/handleLogOut"
 import {handleSearchBtn} from "./handlers/handleSearchBtn"
 import {fetchNextPage} from "./handlers/fetchNextPage"
-import {SearchInput} from "./Components/SearchInput"
+import {SearchBar} from "./Components/SearchBar"
 import { updateRefresh } from '../../redux/slices/dashBoardPageSlice';
 import {RefreshBtn} from "./Components/RefreshBtn"
 import {handleUpdateVoices} from "./handlers/handleUpdateVoices"
@@ -16,7 +16,7 @@ export default function DashboardScreen({navigation}) {
 
   // useSelector hook to get data from the redux store
   const loading = useSelector((state) => state.dashBoardPageReducer.loading);
-  const searchBarVisible = useSelector((state) => state.dashBoardPageReducer.searchBarVisible);
+  const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
   const refresh = useSelector((state) => state.dashBoardPageReducer.refresh);
   const accessToken = useSelector((state) => state.authenticationReducer.accessToken);
   const pageNumber = useSelector((state) => state.articlesReducer.currentPageNumber);
@@ -48,8 +48,8 @@ export default function DashboardScreen({navigation}) {
         <View style={styles.AppContainer}> 
           <Appbar.Header style={styles.AppBarHeader}>
             <Appbar.BackAction onPress={()=>{handleLogOut(navigation,dispatch)}} />
-            <SearchInput/>
-            <RefreshBtn/>
+            <SearchBar />
+            <RefreshBtn />
             <Appbar.Action icon="magnify" onPress={()=>{handleSearchBtn(dispatch,searchBarVisible)}} />
           </Appbar.Header>
           <View style={styles.containerOpacity}>
@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
     backgroundColor:"rgba(0, 0, 0,0.77)"
     },
   AppBarHeader:{
-    backgroundColor:"rgb(31, 20, 99)",  
+    backgroundColor:"rgb(31, 20, 99)", 
+    flexDirection:"row", 
     justifyContent:"space-between"
   },
   AppContainer:{

@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
   
 const initialState = {
   loading: false,
-  searchBarVisible: false,
   refresh: false,
   stopFetching: false,
 };
@@ -14,9 +13,6 @@ export const dashBoardPageSlice = createSlice({
     updateLoading: (state, action) => {
         state.loading=action.payload;
     },  
-    updateSearchBarVisible: (state, action) => {
-        state.searchBarVisible=action.payload;
-    },
     updateRefresh: (state, action) => {
         state.refresh=action.payload;
     },
@@ -28,7 +24,6 @@ export const dashBoardPageSlice = createSlice({
 
 export const { 
     updateLoading, 
-    updateSearchBarVisible,
     updateRefresh,
     updateStopFetching} = dashBoardPageSlice.actions;
 

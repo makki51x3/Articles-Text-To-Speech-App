@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
   
   const initialState = {
     articles: [],
-    filteredArticles: [],
     currentPageNumber: 0,
   };
   
@@ -22,22 +21,10 @@ import { createSlice } from "@reduxjs/toolkit";
       incrementPageNumber: (state)=>{
         state.currentPageNumber=state.currentPageNumber+1;
       },
-      updateFilteredArticles: (state, action) => {
-        state.filteredArticles=[];
-        if(action.payload.currentList!=[]){
-            action.payload.currentList.forEach((element) => {
-                // should work irrelevant of the letter case
-                if(element.abstract.toLowerCase().includes(action.payload.filter.toLowerCase()) || element.headline.main.toLowerCase().includes(action.payload.filter.toLowerCase())){
-                    state.filteredArticles.push(element);
-                }
-            }); 
-        }
-      },
     },
   });
   
     export const { 
-        updateFilteredArticles, 
         resetArticles, 
         updateArticles, 
         updatePageNumber,

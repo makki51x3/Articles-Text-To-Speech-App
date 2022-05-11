@@ -1,6 +1,6 @@
 
 import * as Speech from 'expo-speech';
-import {updateSearchBarVisible} from '../../../redux/slices/dashBoardPageSlice'
+import {updateSearchBarVisible} from '../../../redux/slices/searchSlice'
 
 export const handleSearchBtn = (dispatch,searchBarVisible)=>{
     Speech.stop();  // stop speech if in play

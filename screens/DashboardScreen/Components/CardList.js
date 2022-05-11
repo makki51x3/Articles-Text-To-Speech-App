@@ -8,9 +8,9 @@ import {renderBlogCard} from './BlogCard';
 export const  CardList = () => {
     
     const dispatch = useDispatch();
-    const searchBarVisible = useSelector((state) => state.dashBoardPageReducer.searchBarVisible);
+    const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
     const loading = useSelector((state) => state.dashBoardPageReducer.loading);
-    const filteredArticles = useSelector((state) => state.articlesReducer.filteredArticles);
+    const filteredArticles = useSelector((state) => state.searchReducer.filteredArticles);
     const articles = useSelector((state) => state.articlesReducer.articles);
     const articlesList = searchBarVisible ? filteredArticles : articles;
     const stopFetching = useSelector((state) => state.dashBoardPageReducer.stopFetching);
@@ -34,7 +34,7 @@ export const  CardList = () => {
                    ({item})=> renderBlogCard(item)
                 }
                 keyExtractor={(item) => item["_id"]}                
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0}
                 onEndReached={
                     ()=>{
                         if(!searchBarVisible && !stopFetching && !loading){

@@ -4,6 +4,7 @@ import articlesReducer from "./slices/articlesSlice";
 import loginPageReducer from "./slices/loginPageSlice";
 import dashBoardPageReducer from "./slices/dashBoardPageSlice";
 import cardReducer from "./slices/cardSlice";
+import searchReducer from "./slices/searchSlice";
 
 export const store = configureStore({
     reducer:{
@@ -11,7 +12,8 @@ export const store = configureStore({
         articlesReducer,
         loginPageReducer,
         dashBoardPageReducer,
-        cardReducer
+        cardReducer,
+        searchReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         immutableCheck: false,
