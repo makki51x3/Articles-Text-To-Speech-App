@@ -1,6 +1,6 @@
 # Quick Video of Prototype on The Web
 
-https://user-images.githubusercontent.com/96151955/166845139-92d370ae-52cd-4fc4-aef3-b5ee543bdedd.mp4
+https://user-images.githubusercontent.com/96151955/168324003-48a23730-58d5-4d1f-b33a-e302de1804a5.mp4
 
 
 # Contents Table
@@ -41,7 +41,7 @@ A ReactJS application that communicates with a blogging API to allow users to si
 
 # Usecase and Features 
 
-The application consists of two screens: Login & Dashboard. Upon starting the application, the user is directed to the Login screen which contains a username and password input fields, a show/hide icon for the password field to view the ciphered text, and a login button. The login button is initially disabled when both input fields are empty or the login API is in progress. A loading spinner is displayed whenever an API call is made. If the username or password are invalid, the API sends back an unauthorised response which is fetched by the app that in turn displays a warning text in red color. Upon authentication, the API sends back an access token that is later used to fetch articles from the API. The application then routes the user to the dashboard screen. The dashboard screen is made up of a list of article cards, that display an additional paragraph once pressed, a play audio button that converts the text-to-speech, and a logout and search buttons. The application fetches articles from the API whenever the user is routed to the dashboard screen. If the user reaches the end of the articles list, the application will send a request, with the page parameter incremented, to the API to load new articles. The application handles exceptions where the API wasn’t successful or didn’t return any data. If the user pulls down to refresh, the application will display an animated loading indicator, reset the page number to zero and remove the articles from the redux store. It then will send a fetch request to load new articles from the API. If the user presses the search button, the app enters search mode, a search input field will be displayed and the loaded articles are cleared. When the user types in the search input, the loaded articles are filtered and only the articles that contain the searched pattern in the article title or article description are displayed. Once the user represses the search button, it exits search mode, the search input field will get cleared and disappear from the screen displaying back all the loaded articles. During search mode the user cannot load more data. The user can choose to logout at any time using the logout button displayed on the top left of the screen. Upon logout the application clears the access token from the redux store and routes the user to the login screen. 
+The application consists of two screens: Login & Dashboard. Upon starting the application, the user is directed to the Login screen which contains a username and password input fields, a show/hide icon for the password field to view the ciphered text, and a login button. The login button is initially disabled when both input fields are empty or the login API is in progress. A loading spinner is displayed whenever an API call is made. If the username or password are invalid, the API sends back an unauthorised response which is fetched by the app that in turn displays a warning text in red color. Upon authentication, the API sends back an access token that is later used to fetch articles from the API. The application then routes the user to the dashboard screen. The dashboard screen is made up of a list of article cards, that display an additional paragraph once pressed, a play audio button that converts the text-to-speech, and a logout and search buttons. The application fetches articles from the API whenever the user is routed to the dashboard screen. If the user reaches the end of the articles list, the application will send a request, with the page parameter incremented, to the API to load new articles. The application handles exceptions where the API wasn’t successful or didn’t return any data. If the user pulls down to refresh, the application will display an animated loading indicator, reset the page number to zero and remove the articles from the redux store. It then will send a fetch request to load new articles from the API. If the user presses the search button, the app enters search mode, a search input field will be displayed and the loaded articles are cleared. When the user types in the search input, the loaded articles are filtered and only the articles that contain the searched pattern in the article title or article description are displayed. Once the user re-presses the search button, it exits search mode, the search input field will get cleared and disappear from the screen displaying back all the loaded articles. During search mode the user cannot load more data. The user can choose to logout at any time using the logout button displayed on the top left of the screen. Upon logout, the application clears the access token from the redux store and routes the user to the login screen. The application contains an advanced speech option to control the speech's speed and choose from different available voice options. Lastly, the application has an advanced search option that enables the user to sort the results in ascending or descending alphabetical order, filter depending on how much time it takes to read the article (less than 3 minutes/ between 3 and 10 minutes/ and higher than 10 minutes), choose where to search text ( in abstract, title, body, author, etc. ).
 
 # UI/UX Design
 
@@ -81,7 +81,7 @@ The project makes use of different libraries like redux js tools for state manag
 
 ## Redux Store
 
-![image](https://user-images.githubusercontent.com/96151955/167683111-9a3b00e6-3c03-4d25-86c7-8ee32d3e7fe7.png)
+![image](https://user-images.githubusercontent.com/96151955/168296721-88373d0d-c3cb-4b23-9292-5b0bee06d718.png)
 
 # Build Tools
 
@@ -112,7 +112,7 @@ More information can be found here: https://docs.expo.dev/guides/sharing-preview
   ### *Link*
   https://exp.host/@51x3/interview_challenge?release-channel=default
   ### *QR Code*
-  ![image](https://user-images.githubusercontent.com/96151955/167727745-31e5f2c8-0f2f-4e7a-8dbd-ebb9fa8aca97.png)
+  ![image](https://user-images.githubusercontent.com/96151955/168329176-9bbc3adb-2e98-44e1-8517-f5a22e5acc56.png)
 
 ## On Web
 
@@ -130,19 +130,16 @@ More information can be found here: https://docs.expo.dev/get-started/installati
 
 • Adding Unit tests for different interactions between the user or API and the application.
 
-• Adding the Unit tests to Github Actions for automated testing upon each commit. 
+• Adding the Unit tests to Github Actions for automated testing upon each commit. ( CI/CD )
 
 • Adding a splash screen { for mobile only (IOS and Android) }
 
 • Adding an app icon { for mobile only (IOS and Android) }
 
-• The use of Docker container to deploy the application on the cloud
+• Create a Docker container to deploy the application on the cloud
 
-• Adding an advanced search option ( Sort Ascending/Descending alphabetical order, sort according time to read, choose where to search text e.g. in abstract, title, body, etc. )
-
-• Adding an advanced speech option ( switch between male or female voice, control the speech's speed, etc. )
 
 # Prototype (IOS/Web/Android)
 
-<img src="https://user-images.githubusercontent.com/96151955/166102677-edee71c2-2a6f-4830-bcb6-d56741ec934c.png" alt="IOS" width="200" height="420" /><img src="https://user-images.githubusercontent.com/96151955/166847089-8ef41419-1d56-403e-bb59-a6af761ea592.png" alt="laptop" width=610/><img src="https://user-images.githubusercontent.com/96151955/166103467-018d4d32-5a62-49cf-9aac-bed4c7943aea.png" alt="android" width="200" height="420"/>
+<img src="https://user-images.githubusercontent.com/96151955/168328857-56860a15-8d2f-42ef-baab-ac7600c3b658.png" alt="IOS" width="200" height="420" /><img src="https://user-images.githubusercontent.com/96151955/166847089-8ef41419-1d56-403e-bb59-a6af761ea592.png" alt="laptop" width=610/><img src="https://user-images.githubusercontent.com/96151955/168328870-96deeb48-b179-45a1-bcf1-976c34d0b204.png" alt="android" width="200" height="420"/>
 
