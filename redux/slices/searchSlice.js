@@ -34,8 +34,6 @@ export const searchSlice = createSlice({
     updateFilteredArticles: (state, action) => {
         state.filteredArticles=[];
         const added = new Set();  // set data structure to track only unique IDs of added children
-        
-        console.log("initially:\t",added);
         if(action.payload){  // if pattern matches add the element to array
             action.payload.forEach((element) => { // works irrelevant of the letter case
                 if( // In headline
@@ -82,7 +80,6 @@ export const searchSlice = createSlice({
                 (card)=>{
                     switch (state.advancedOptions.timeToRead) { // Time to Read removes from set instead of adding to it
                         case 0: 
-                            // added.add(element);
                             state.filteredArticles.push(card)
                             break;
     
@@ -110,8 +107,13 @@ export const searchSlice = createSlice({
                     }
                 }
             );
+            const order = state.advancedOptions.sortOrder?1:-1 // 1 for ascending , -1 for descending
+            state.filteredArticles.sort(  // sort articles by headline in ascending or descending order
+                (a,b)=>(
+                    a.headline.main.charCodeAt(0)-b.headline.main.charCodeAt(0)
+                    ) * order
+            );
         }
-        console.log("finally:\t",added);
     },
     updateSortOrder: (state, action) => {
         state.advancedOptions.sortOrder=action.payload;
