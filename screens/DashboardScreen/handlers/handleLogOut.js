@@ -1,7 +1,8 @@
 import * as Speech from 'expo-speech';
 import {resetArticles, resetPageNumber} from '../../../redux/slices/articlesSlice'
 import { updateAccessToken } from '../../../redux/slices/authenticationSlice';
-import { resetAvailableVoices,updateViewContent } from '../../../redux/slices/cardSlice';
+import { resetAvailableVoices } from '../../../redux/slices/speechSlice';
+import {updateViewContent} from "../../../redux/slices/dashBoardPageSlice"
 
 export const handleLogOut = (navigation,dispatch) => {        
     dispatch(updateAccessToken("")); // reset access token in redux store

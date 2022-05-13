@@ -2,21 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
   
 const initialState = {
   loading: false,
-  searchBarVisible: false,
   refresh: false,
   stopFetching: false,
+  viewContent: "",
 };
 
 export const dashBoardPageSlice = createSlice({
   name: "dashBoardPage",
   initialState,
   reducers: {
+    updateViewContent: (state, action) => {
+      state.viewContent= action.payload;
+    },
     updateLoading: (state, action) => {
         state.loading=action.payload;
     },  
-    updateSearchBarVisible: (state, action) => {
-        state.searchBarVisible=action.payload;
-    },
     updateRefresh: (state, action) => {
         state.refresh=action.payload;
     },
@@ -28,7 +28,7 @@ export const dashBoardPageSlice = createSlice({
 
 export const { 
     updateLoading, 
-    updateSearchBarVisible,
+    updateViewContent,
     updateRefresh,
     updateStopFetching} = dashBoardPageSlice.actions;
 

@@ -4,11 +4,14 @@ import {handleLogin} from "../handlers/handleLogin"
 
 export const LoginBtn = ({navigation})=>{
 
+    // Get data from the redux store
     const dispatch = useDispatch();
 
-    // Get data from the redux store
+    // Log In Page Reducer
     const loginFailed = useSelector((state) => state.loginPageReducer.loginFailed);
     const loading = useSelector((state) => state.loginPageReducer.loading);
+
+    // Authentication Reducer
     const userName = useSelector((state) => state.authenticationReducer.credentials.user);
     const password = useSelector((state) => state.authenticationReducer.credentials.pass);
     const warningText = useSelector((state) => state.authenticationReducer.warningText);
