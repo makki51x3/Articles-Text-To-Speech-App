@@ -12,6 +12,9 @@ export const handleUpdateVoices = (dispatch) => {
                     } 
                 });
             }
+        },
+        (error)=>{
+            // do nothing
         }
     );     
 }; 

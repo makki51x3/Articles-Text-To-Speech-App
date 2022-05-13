@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     searchInput: {
       flex:1,
       textAlign: 'center',
-      padding:(Platform.OS=="ios"||Platform.OS=="android")?1:4,
+      padding:(Platform.OS!="ios")?"0.3%":"1.3%", 
       margin:10,
       marginRight:0,
       borderWidth: 1,

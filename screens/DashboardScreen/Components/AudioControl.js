@@ -23,13 +23,13 @@ export const AudioControl = ({thingToSay,id})=> {
     const selectedVoice = useSelector((state) => state.speechReducer.selectedVoice);
 
     return (
-        <View style={{flexDirection:"row", justifyContent:(Platform.OS=="ios"||Platform.OS=="android")?"flex-end":"space-between" }}>
+        <View style={styles.container}>
             {(Platform.OS=="ios"||Platform.OS=="android")?<></>:
             <TouchableOpacity 
                 style={styles.speechBtn} 
-                onPress={()=>{}}
+                onPress={()=>{/* do nothing to stay in focus */}}
                 >
-                <Text style={{fontSize:14,fontWeight:666}}>Choose Speaker: </Text>
+                <Text style={styles.textImp}>Choose Speaker: </Text>
                 <Picker
                     selectedValue={selectedVoice}
                     onValueChange={
@@ -50,7 +50,7 @@ export const AudioControl = ({thingToSay,id})=> {
                         Speech.stop();
                     }}
                     >
-                    <Text style={{fontWeight:"bold"}}> {"x "+(speechSpeed).toString()} Audio Speed</Text>
+                    <Text style={styles.text}> {"x "+(speechSpeed).toString()} Audio Speed</Text>
                 </TouchableOpacity>    
                 <TouchableOpacity 
                     style={styles.speechBtn} 
@@ -59,7 +59,7 @@ export const AudioControl = ({thingToSay,id})=> {
                     }}
                     >
                     <Ionicons name={speechIcon} size={20} color="black" />
-                    <Text style={{fontWeight:"bold"}}> {speechIcon=="play-circle-outline"?"Play":"Stop"} Audio</Text>
+                    <Text style={styles.text}> {speechIcon=="play-circle-outline"?"Play":"Stop"} Audio</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -67,6 +67,17 @@ export const AudioControl = ({thingToSay,id})=> {
 }
 
 const styles = StyleSheet.create({
+    textImp: {
+        fontSize:14,
+        fontWeight:"700"   
+    },
+    text: {
+        fontWeight:"bold"
+    },
+    container: {
+        flexDirection:"row", 
+        justifyContent: (Platform.OS=="ios"||Platform.OS=="android")?"flex-end":"space-between" 
+    },
     speechBtn: {
         margin:ScreenHeight*0.01,
         marginBottom:ScreenHeight*0.03,
