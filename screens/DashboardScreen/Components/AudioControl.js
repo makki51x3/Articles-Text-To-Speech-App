@@ -50,7 +50,7 @@ export const AudioControl = ({thingToSay,id})=> {
                         Speech.stop();
                     }}
                     >
-                    <Text> {"x "+(speechSpeed).toString()} Audio Speed</Text>
+                    <Text style={{fontWeight:"bold"}}> {"x "+(speechSpeed).toString()} Audio Speed</Text>
                 </TouchableOpacity>    
                 <TouchableOpacity 
                     style={styles.speechBtn} 
@@ -59,7 +59,7 @@ export const AudioControl = ({thingToSay,id})=> {
                     }}
                     >
                     <Ionicons name={speechIcon} size={20} color="black" />
-                    <Text> {speechIcon=="play-circle-outline"?"Play":"Stop"} Audio</Text>
+                    <Text style={{fontWeight:"bold"}}> {speechIcon=="play-circle-outline"?"Play":"Stop"} Audio</Text>
                 </TouchableOpacity>
             </View>
         </View>

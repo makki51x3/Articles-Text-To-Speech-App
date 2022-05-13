@@ -2,7 +2,7 @@ import { View, TextInput, StyleSheet, Dimensions, Platform, TouchableOpacity } f
 import { Ionicons } from '@expo/vector-icons'; 
 import { useSelector, useDispatch } from "react-redux";
 import { Appbar } from 'react-native-paper';
-import {updateFilteredArticles} from "../../../redux/slices/searchSlice"
+import {updateFilteredArticles,updateFilter} from "../../../redux/slices/searchSlice"
 import { handleAdvancedSearchPressed } from "../handlers/handleAdvancedSearchPressed";
 
 const ScreenHeight = Dimensions.get("window").height;
@@ -14,7 +14,6 @@ export const SearchBar = ()=>{
 
     // Search Reducer
     const searchBarVisible = useSelector((state) => state.searchReducer.searchBarVisible);
-    const advancedSearchIcon = useSelector((state) => state.searchReducer.advancedSearchIcon);
     const advancedSearchVisible = useSelector((state) => state.searchReducer.advancedSearchVisible);
 
     // Articles Reducer
@@ -24,8 +23,9 @@ export const SearchBar = ()=>{
         return (
             <View style={{flexDirection:"row", justifyContent:"space-around",width:"77%"}}>
                 <TextInput 
-                onChangeText={(filter) => {     
-                    dispatch(updateFilteredArticles({filter:filter,currentList:articles}));
+                onChangeText={(filter) => {  
+                    dispatch(updateFilter(filter)) ;
+                    dispatch(updateFilteredArticles(articles));
                 }} 
                 placeholder="Search articles"
                 style={styles.searchInput} 

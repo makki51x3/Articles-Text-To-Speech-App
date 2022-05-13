@@ -5,12 +5,10 @@ import { Subheading, Card, Paragraph } from 'react-native-paper';
 import {handleViewContent} from "../handlers/handleViewContent"
 import {AudioControl} from "../Components/AudioControl"
 import { useSelector, useDispatch } from "react-redux";
+import {timeToRead} from "../handlers/timeToRead"
 
 const ScreenHeight = Dimensions.get("window").height;
 const ScreenWidth = Dimensions.get("window").width;
-
-// every 130 words is about 1 minute of speech according to what I googled. ..
-const timeToRead = (wordCount)=>{return Math.floor(wordCount/130)};   
 
 const BlogCard = ({ title, subtitle, abstract, id, content, media, thingToSay }) => {
     
