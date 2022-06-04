@@ -30,28 +30,28 @@ export const  CardList = () => {
     if (articlesList.length){   
         return (
             <SafeAreaView style={{flex:1}}>
-            <FlatList
-                refreshControl={
-                    <RefreshControl
-                    onRefresh={()=>{handleRefreshPressed(dispatch,refresh)}}
-                    />
-                }
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                data={articlesList}
-                renderItem={
-                   ({item})=> renderBlogCard(item)
-                }
-                keyExtractor={(item) => item["_id"]}                
-                onEndReachedThreshold={0}
-                onEndReached={
-                    ()=>{
-                        if(!searchBarVisible && !stopFetching && !loading){
-                            fetchNextPage(dispatch,pageNumber,articles,accessToken);  
+                <FlatList
+                    refreshControl={
+                        <RefreshControl
+                        onRefresh={()=>{handleRefreshPressed(dispatch,refresh)}}
+                        />
+                    }
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    data={articlesList}
+                    renderItem={
+                    ({item})=> renderBlogCard(item)
+                    }
+                    keyExtractor={(item) => item["_id"]}                
+                    onEndReachedThreshold={0}
+                    onEndReached={
+                        ()=>{
+                            if(!searchBarVisible && !stopFetching && !loading){
+                                fetchNextPage(dispatch,pageNumber,articles,accessToken);  
+                            }
                         }
                     }
-                }
-            />
+                />
             </SafeAreaView>
         );
     }
