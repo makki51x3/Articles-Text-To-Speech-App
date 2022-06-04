@@ -5,7 +5,12 @@ import {updateLoading, updateLoginFailed} from "../../../redux/slices/loginPageS
 export const handleLogin = (navigation,dispatch,userName,password) => {
 
   // Setup required http headers
-  const config = { headers: {'Content-Type': 'application/json', 'accept': 'application/json'}}
+  const config = { 
+    headers: {
+      'Content-Type': 'application/json', 
+      'accept': 'application/json'
+    }
+  };
 
   // enable loading 
   dispatch(updateLoading(true));
