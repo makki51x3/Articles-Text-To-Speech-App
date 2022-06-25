@@ -20,7 +20,7 @@ const BlogCard = ({ title, subtitle, abstract, id, content, media, thingToSay })
         <Card onPress={()=>{handleViewContent(dispatch,id,viewContent)}} style={styles.card}>
             <Card.Title title={title} subtitle={subtitle} titleNumberOfLines={2}></Card.Title>
             <Card.Content>
-                {media!="" && <Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
+                {media && <Image source={{ uri: "https://static01.nyt.com/"+media }} style = {styles.image} />}  
                 <Paragraph >{abstract}</Paragraph> 
                 {
                 viewContent==id &&
