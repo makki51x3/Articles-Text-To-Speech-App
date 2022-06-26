@@ -65,7 +65,6 @@ export const SearchControl = ()=> {
 
                     </View>
                     <View style={styles.elementPair}>
-
                         <TouchableOpacity 
                             style={styles.btn} 
                             onPress={()=>{dispatch(updateSearchInAuthor(!searchInAuthor))}}
